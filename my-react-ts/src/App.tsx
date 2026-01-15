@@ -1,58 +1,20 @@
-
-import React, { useState, useEffect, useCallback } from 'react';
-import { GoogleGenAI } from "@google/genai";
+import React, { useState } from 'react';
 import { CHAPTER_IV_DATA } from './constants';
-import type { ContentSection } from './types';
+import { StudyPage, TimelinePage, QuizGamePage } from './pages';
+
+type PageMode = 'study' | 'timeline' | 'game';
 
 const App: React.FC = () => {
-  const [activeSectionId, setActiveSectionId] = useState<string>(CHAPTER_IV_DATA.sections[0].id);
-  const [aiAnalysis, setAiAnalysis] = useState<string>('');
-  const [isLoadingAi, setIsLoadingAi] = useState<boolean>(false);
-  const [showSearch, setShowSearch] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>('');
+  const [pageMode, setPageMode] = useState<PageMode>('study');
 
-  const currentSection = CHAPTER_IV_DATA.sections.find(s => s.id === activeSectionId) || CHAPTER_IV_DATA.sections[0];
-
-  const fetchAiInsight = useCallback(async (section: ContentSection) => {
-    setIsLoadingAi(true);
-    setAiAnalysis('');
-    try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      console.log('API Key loaded:', apiKey ? 'Yes' : 'No');
-
-      if (!apiKey) {
-        setAiAnalysis('❌ Vui lòng cấu hình VITE_GEMINI_API_KEY trong file .env.local và restart server');
-        setIsLoadingAi(false);
-        return;
-      }
-
-      // Sử dụng cách gọi API theo doc của Google GenAI
-      const ai = new GoogleGenAI({ apiKey });
-
-      const prompt = `Bạn là một giáo sư chuyên ngành Tư tưởng Hồ Chí Minh. 
-      Dựa trên nội dung sau: "${section.subtitle}: ${section.content.join(' ')}", 
-      hãy phân tích ngắn gọn ý nghĩa thực tiễn của tư tưởng này trong bối cảnh Việt Nam hiện nay. 
-      Hãy trình bày bằng ngôn ngữ trang trọng, súc tích, mang hơi hướng cổ điển.`;
-
-      // Đổi sang model ổn định và miễn phí
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-      });
-
-      setAiAnalysis(response.text || 'Không có phản hồi từ trí tuệ nhân tạo.');
-    } catch (error) {
-      console.error("AI Error:", error);
-      const errorMessage = error instanceof Error ? error.message : 'Không thể kết nối với trí tuệ nhân tạo';
-      setAiAnalysis(`Lỗi: ${errorMessage}`);
-    } finally {
-      setIsLoadingAi(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    // We only fetch AI insight when the user explicitly clicks a button to keep it interactive
-  }, []);
+  // Full page modes
+  if (pageMode === 'timeline') {
+    return <TimelinePage onNavigate={(mode: PageMode) => setPageMode(mode)} />;
+  }
+  
+  if (pageMode === 'game') {
+    return <QuizGamePage onNavigate={(mode: PageMode) => setPageMode(mode)} />;
+  }
 
   return (
     <div className="min-h-screen p-4 md:p-8 flex flex-col items-center relative">
@@ -75,141 +37,57 @@ const App: React.FC = () => {
           <p className="text-[#6d4c41] italic text-lg md:text-xl max-w-2xl mx-auto">
             "{CHAPTER_IV_DATA.title}"
           </p>
+          
+          {/* Navigation Tabs */}
+          <div className="flex justify-center gap-3 mt-8 flex-wrap">
+            <button
+              onClick={() => setPageMode('study')}
+              className={`px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${
+                pageMode === 'study'
+                  ? 'bg-[#8b7355] text-[#fdf6e3] shadow-lg'
+                  : 'bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]'
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              Học tập
+            </button>
+            <button
+              onClick={() => setPageMode('timeline')}
+              className={`px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${
+                pageMode === 'timeline'
+                  ? 'bg-[#8b7355] text-[#fdf6e3] shadow-lg'
+                  : 'bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]'
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+              Hải trình
+            </button>
+            <button
+              onClick={() => setPageMode('game')}
+              className={`px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${
+                pageMode === 'game'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                  : 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 hover:from-purple-200 hover:to-pink-200'
+              }`}
+            >
+              <span className="text-lg">🎮</span>
+              Game
+            </button>
+          </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Navigation Sidebar */}
-          <nav className="lg:col-span-1 space-y-4">
-            <h3 className="heading-font font-bold text-[#8b7355] uppercase text-sm tracking-widest mb-4">Mục lục</h3>
-            {CHAPTER_IV_DATA.sections.map((section, index) => {
-              const prevSection = index > 0 ? CHAPTER_IV_DATA.sections[index - 1] : null;
-              const showTitle = !prevSection || prevSection.title !== section.title;
-
-              return (
-                <div key={section.id}>
-                  {showTitle && (
-                    <div className="text-xs font-bold text-[#8b7355] mt-4 mb-2 uppercase tracking-wide">
-                      {section.title.split(':')[0]}
-                    </div>
-                  )}
-                  <button
-                    onClick={() => {
-                      setActiveSectionId(section.id);
-                      setAiAnalysis('');
-                    }}
-                    className={`w-full text-left p-3 rounded transition-all duration-300 border-l-4 ${activeSectionId === section.id
-                      ? 'bg-[#e5dcc3] border-[#8b7355] text-[#4a3728] font-bold shadow-sm'
-                      : 'border-transparent text-[#6d4c41] hover:bg-[#f0e6cf]'
-                      }`}
-                  >
-                    <div className="text-sm leading-tight">{section.subtitle}</div>
-                  </button>
-                </div>
-              );
-            })}
-
-            <div className="mt-8 pt-6 border-t border-[#d4c5a1]">
-              <div className="text-xs italic text-[#8b7355]">"Dễ mười lần không dân cũng chịu, khó vạn lần dân liệu cũng xong."</div>
-            </div>
-          </nav>
-
-          {/* Content Area */}
-          <main className="lg:col-span-3 min-h-[500px]">
-            <div className="animate-fadeIn">
-              <h2 className="heading-font text-2xl md:text-3xl text-[#4a3728] font-bold mb-2">
-                {currentSection.title}
-              </h2>
-              <h3 className="text-xl text-[#8b7355] font-semibold mb-6 italic">
-                {currentSection.subtitle}
-              </h3>
-
-              <div className="space-y-6 text-[#2d1e12] leading-relaxed text-lg text-justify">
-                {currentSection.content.map((p, i) => (
-                  <p key={i} className="first-letter:text-4xl first-letter:font-bold first-letter:mr-2 first-letter:float-left">
-                    {p}
-                  </p>
-                ))}
-              </div>
-
-              {currentSection.quotes && (
-                <div className="mt-8 bg-[#fdfaf3] border-l-4 border-[#8b7355] p-6 italic text-[#4a3728] shadow-inner">
-                  {currentSection.quotes.map((quote, i) => (
-                    <div key={i} className="mb-2">"{quote}"</div>
-                  ))}
-                </div>
-              )}
-
-              {/* AI Interaction Section */}
-              <div className="mt-12 pt-8 border-t-2 border-dashed border-[#d4c5a1]">
-                <button
-                  onClick={() => fetchAiInsight(currentSection)}
-                  disabled={isLoadingAi}
-                  className="flex items-center gap-2 bg-[#8b7355] text-[#fdf6e3] px-6 py-2 rounded-full hover:bg-[#6d4c41] transition-colors shadow-md disabled:opacity-50"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                  {isLoadingAi ? 'Đang thỉnh giáo...' : 'Thỉnh giáo phân tích của Giáo sư AI'}
-                </button>
-
-                {aiAnalysis && (
-                  <div className="mt-6 bg-[#f4ecd8] p-6 rounded-lg border border-[#c5b38a] relative animate-slideUp">
-                    <div className="absolute -top-3 left-6 bg-[#8b7355] text-white text-[10px] px-2 py-1 rounded uppercase tracking-tighter">Phân tích học thuật</div>
-                    <div className="text-[#4a3728] leading-relaxed italic whitespace-pre-wrap">
-                      {aiAnalysis}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </main>
-        </div>
+        {/* Page Content */}
+        <StudyPage />
 
         {/* Footer info */}
         <footer className="mt-16 text-center border-t border-[#d4c5a1] pt-8 text-[#8b7355] text-sm italic">
           <p>© 2024 - Tài liệu học tập điện tử chuyên đề Tư tưởng Hồ Chí Minh</p>
           <p className="mt-2">"Học để làm việc, làm người, làm cán bộ. Học để phụng sự đoàn thể, giai cấp và nhân dân, Tổ quốc và nhân loại."</p>
         </footer>
-      </div>
-
-      {/* Floating Search Feature */}
-      <div className="fixed bottom-8 right-8 z-50">
-        {!showSearch ? (
-          <button
-            onClick={() => setShowSearch(true)}
-            className="bg-[#4a3728] text-[#f4ecd8] w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
-        ) : (
-          <div className="bg-[#fdf6e3] p-4 rounded-xl shadow-2xl border-2 border-[#8b7355] w-80 animate-slideIn">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-bold text-[#4a3728]">Tra cứu tư liệu</span>
-              <button onClick={() => { setShowSearch(false); setAiAnalysis(''); }} className="text-[#8b7355]">✕</button>
-            </div>
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Nhập câu hỏi của bạn..."
-              className="w-full bg-[#f4ecd8] border border-[#d4c5a1] p-2 rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#8b7355]"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  const mockSection = {
-                    id: 'search',
-                    subtitle: 'Tra cứu',
-                    title: 'Kết quả tra cứu',
-                    content: [query]
-                  };
-                  fetchAiInsight(mockSection);
-                }
-              }}
-            />
-            <p className="text-[10px] mt-2 text-[#8b7355] italic">Nhấn Enter để gửi thắc mắc đến AI</p>
-          </div>
-        )}
       </div>
 
       <style>{`
@@ -225,9 +103,14 @@ const App: React.FC = () => {
           from { opacity: 0; transform: translateX(20px); }
           to { opacity: 1; transform: translateX(0); }
         }
+        @keyframes wave {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
         .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
         .animate-slideUp { animation: slideUp 0.5s ease-out forwards; }
         .animate-slideIn { animation: slideIn 0.3s ease-out forwards; }
+        .wave-animation { animation: wave 8s linear infinite; }
       `}</style>
     </div>
   );
