@@ -397,9 +397,9 @@ export const CHAPTER_IV_DATA: ChapterData = {
         "【VAI TRÒ LÃNH ĐẠO - Điều kiện thắng lợi】Bảo đảm điều kiện thắng lợi: nhấn mạnh yêu cầu Đảng phải vững thì cách mạng mới thành công. Sự lãnh đạo của Đảng là một tất yếu khách quan, xuất phát từ yêu cầu phát triển của dân tộc. Bảo đảm và phát huy vai trò lãnh đạo của Đảng được xem là nguyên tắc vận hành của xã hội Việt Nam từ khi có Đảng."
       ],
       quotes: [
-        "Cách mệnh trước hết phải có 'đảng cách mệnh' (tr.69)",
-        "Đảng có vững, cách mệnh mới thành công, cũng như người cầm lái có vững thuyền mới chạy (tr.69)",
-        "Sự ra đời của Đảng Cộng sản Việt Nam là kết quả của sự kết hợp chủ nghĩa Mác–Lênin với phong trào công nhân và phong trào yêu nước (tr.70)"
+        "Cách mệnh trước hết phải có 'đảng cách mệnh'",
+        "Đảng có vững, cách mệnh mới thành công, cũng như người cầm lái có vững thuyền mới chạy",
+        "Sự ra đời của Đảng Cộng sản Việt Nam là kết quả của sự kết hợp chủ nghĩa Mác–Lênin với phong trào công nhân và phong trào yêu nước"
       ]
     },
     {
@@ -490,6 +490,16 @@ export const CHAPTER_IV_DATA: ChapterData = {
 import type { Slide } from './types';
 
 export const SLIDES_DATA: Slide[] = [
+  // VIDEO INTRO
+  {
+    id: 0,
+    icon: "🎬",
+    title: "Video giới thiệu",
+    content: [],
+    bgColor: "from-black to-black",
+    video: "/src/video/Quan Liêu & Tin Giả.mp4",
+    isVideoSlide: true
+  },
   // SECTION 1 - HERO
   {
     id: 1,

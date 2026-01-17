@@ -53,4 +53,6 @@ export interface Slide {
   highlight?: string;
   bgColor: string;
   image?: string;
+  video?: string;
+  isVideoSlide?: boolean;
 }
