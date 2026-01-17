@@ -44,36 +44,36 @@ const App: React.FC = () => {
           </p>
 
           {/* Navigation Tabs */}
-          <div className="flex justify-center gap-3 mt-8 flex-wrap">
+          <div className="flex justify-center gap-4 mt-8 flex-wrap">
             <button
               onClick={() => setPageMode('study')}
-              className={`px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${pageMode === 'study'
+              className={`px-6 py-3.5 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2.5 ${pageMode === 'study'
                 ? 'bg-[#8b7355] text-[#fdf6e3] shadow-lg'
                 : 'bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]'
                 }`}
             >
-              <BookOpen className="w-5 h-5" />
+              <BookOpen className="w-6 h-6" />
               Học tập
             </button>
             <button
               onClick={() => setPageMode('timeline')}
-              className="px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]"
+              className="px-6 py-3.5 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2.5 bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]"
             >
-              <Map className="w-5 h-5" />
+              <Map className="w-6 h-6" />
               Hải trình
             </button>
             <button
               onClick={() => setPageMode('game')}
-              className="px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]"
+              className="px-6 py-3.5 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2.5 bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]"
             >
-              <Gamepad2 className="w-5 h-5" />
+              <Gamepad2 className="w-6 h-6" />
               Game
             </button>
             <button
               onClick={() => setPageMode('slide')}
-              className="px-5 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]"
+              className="px-6 py-3.5 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2.5 bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1]"
             >
-              <Presentation className="w-5 h-5" />
+              <Presentation className="w-6 h-6" />
               Slide
             </button>
           </div>
