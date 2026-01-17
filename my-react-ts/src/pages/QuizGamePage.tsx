@@ -338,36 +338,36 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
       <div className="mb-8">
         <span className="inline-flex items-center gap-3 text-amber-600">
           <span className="h-px w-12 bg-amber-400"></span>
-          <span className="font-serif text-sm tracking-[0.3em] uppercase">Thử Thách</span>
+          <span className="font-serif text-base tracking-[0.3em] uppercase">Thử Thách</span>
           <span className="h-px w-12 bg-amber-400"></span>
         </span>
       </div>
 
       {/* Title */}
-      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-100 text-amber-700 mb-6">
-        <Trophy className="w-10 h-10" />
+      <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-amber-100 text-amber-700 mb-6">
+        <Trophy className="w-12 h-12" />
       </div>
-      <h1 className="font-serif text-4xl md:text-5xl text-amber-950 mb-4">Quiz Game</h1>
-      <p className="font-serif text-lg text-amber-700 mb-10">Thử thách kiến thức Tư tưởng Hồ Chí Minh</p>
+      <h1 className="font-serif text-5xl md:text-6xl text-amber-950 mb-4">Quiz Game</h1>
+      <p className="font-serif text-xl md:text-2xl text-amber-700 mb-10">Thử thách kiến thức Tư tưởng Hồ Chí Minh</p>
 
       <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-10"></div>
 
       {/* Game Rules */}
       <div className="text-left mb-10">
-        <h3 className="font-serif text-xl text-amber-800 mb-6 text-center">Ba vòng thi đấu</h3>
+        <h3 className="font-serif text-2xl md:text-3xl text-amber-800 mb-6 text-center">Ba vòng thi đấu</h3>
         <div className="space-y-4">
           {[
-            { icon: <Zap className="w-6 h-6" />, title: 'Vòng 1: Flash Quiz', desc: '60 giây • +10đ mỗi câu đúng • +20đ combo 5 câu', color: 'bg-orange-100 text-orange-700' },
-            { icon: <Brain className="w-6 h-6" />, title: 'Vòng 2: Tình Huống', desc: 'Xử lý đạo đức thực tế • +20đ / +10đ / +0đ', color: 'bg-violet-100 text-violet-700' },
-            { icon: <Skull className="w-6 h-6" />, title: 'Vòng 3: Boss Quiz', desc: '5 câu khó • +30đ mỗi câu • +100đ bonus hoàn hảo', color: 'bg-rose-100 text-rose-700' },
+            { icon: <Zap className="w-7 h-7" />, title: 'Vòng 1: Flash Quiz', desc: '60 giây • +10đ mỗi câu đúng • +20đ combo 5 câu', color: 'bg-orange-100 text-orange-700' },
+            { icon: <Brain className="w-7 h-7" />, title: 'Vòng 2: Tình Huống', desc: 'Xử lý đạo đức thực tế • +20đ / +10đ / +0đ', color: 'bg-violet-100 text-violet-700' },
+            { icon: <Skull className="w-7 h-7" />, title: 'Vòng 3: Boss Quiz', desc: '5 câu khó • +30đ mỗi câu • +100đ bonus hoàn hảo', color: 'bg-rose-100 text-rose-700' },
           ].map((round, i) => (
-            <div key={i} className="flex items-center gap-4 p-4 border border-amber-200 rounded-lg bg-amber-50/50">
-              <div className={`w-12 h-12 rounded-full ${round.color} flex items-center justify-center`}>
+            <div key={i} className="flex items-center gap-4 p-5 border border-amber-200 rounded-lg bg-amber-50/50">
+              <div className={`w-14 h-14 rounded-full ${round.color} flex items-center justify-center`}>
                 {round.icon}
               </div>
               <div className="flex-1">
-                <div className="font-serif font-semibold text-amber-900">{round.title}</div>
-                <div className="text-sm text-amber-600">{round.desc}</div>
+                <div className="font-serif text-lg md:text-xl font-semibold text-amber-900">{round.title}</div>
+                <div className="text-base text-amber-600">{round.desc}</div>
               </div>
             </div>
           ))}
@@ -376,13 +376,13 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
 
       {/* Buttons */}
       <button onClick={goToEnterName}
-        className="w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2 mb-4">
-        Bắt đầu chơi <ChevronRight className="w-5 h-5" />
+        className="w-full py-5 bg-amber-700 hover:bg-amber-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2 mb-4">
+        Bắt đầu chơi <ChevronRight className="w-6 h-6" />
       </button>
 
       <button onClick={() => { loadLeaderboard(); setPhase('leaderboard'); }}
-        className="w-full py-3 border border-amber-300 text-amber-700 font-serif rounded-lg hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
-        <Trophy className="w-5 h-5" /> Bảng xếp hạng
+        className="w-full py-4 border border-amber-300 text-amber-700 font-serif text-lg rounded-lg hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
+        <Trophy className="w-6 h-6" /> Bảng xếp hạng
       </button>
 
       {/* Quote decoration */}
@@ -398,25 +398,25 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
 
   const renderEnterName = () => (
     <article className="max-w-md mx-auto text-center animate-fadeIn">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-700 mb-6">
-        <User className="w-8 h-8" />
+      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-100 text-amber-700 mb-6">
+        <User className="w-10 h-10" />
       </div>
-      <h2 className="font-serif text-3xl text-amber-950 mb-2">Nhập tên của bạn</h2>
-      <p className="font-serif text-amber-600 mb-8">Tên sẽ được hiển thị trên bảng xếp hạng</p>
+      <h2 className="font-serif text-4xl text-amber-950 mb-2">Nhập tên của bạn</h2>
+      <p className="font-serif text-lg text-amber-600 mb-8">Tên sẽ được hiển thị trên bảng xếp hạng</p>
       
       <input
         type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && playerName.trim() && startGame()}
         placeholder="Tên của bạn..."
-        className="w-full px-6 py-4 text-xl bg-amber-50 border-2 border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-amber-900 text-center font-serif placeholder-amber-400 mb-6"
+        className="w-full px-6 py-5 text-2xl bg-amber-50 border-2 border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-amber-900 text-center font-serif placeholder-amber-400 mb-6"
         maxLength={15} autoFocus
       />
       <button onClick={startGame} disabled={!playerName.trim()}
-        className="w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif text-lg rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+        className="w-full py-5 bg-amber-700 hover:bg-amber-800 text-white font-serif text-xl rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed">
         Bắt đầu Game
       </button>
       
-      <button onClick={() => setPhase('intro')} className="mt-6 text-amber-600 hover:text-amber-800 font-serif transition-colors">
+      <button onClick={() => setPhase('intro')} className="mt-6 text-lg text-amber-600 hover:text-amber-800 font-serif transition-colors">
         ← Quay lại
       </button>
     </article>
@@ -432,41 +432,41 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center">
-              <Zap className="w-6 h-6" />
+            <div className="w-14 h-14 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center">
+              <Zap className="w-7 h-7" />
             </div>
             <div>
-              <div className="font-serif text-2xl text-amber-900 font-bold">{score + comboBonus} điểm</div>
-              {combo > 0 && <div className="text-orange-600 text-sm font-serif">🔥 Combo x{combo}</div>}
+              <div className="font-serif text-3xl text-amber-900 font-bold">{score + comboBonus} điểm</div>
+              {combo > 0 && <div className="text-orange-600 text-base font-serif">🔥 Combo x{combo}</div>}
             </div>
           </div>
-          <div className={`px-5 py-3 rounded-lg font-serif text-3xl font-bold transition-all ${isLowTime ? 'bg-red-100 text-red-700 animate-pulse' : 'bg-amber-100 text-amber-800'}`}>
+          <div className={`px-6 py-4 rounded-lg font-serif text-4xl font-bold transition-all ${isLowTime ? 'bg-red-100 text-red-700 animate-pulse' : 'bg-amber-100 text-amber-800'}`}>
             {timeLeft}s
           </div>
         </div>
 
         {/* Combo Bar */}
         {combo > 0 && (
-          <div className="mb-4 bg-amber-100 rounded-full h-2 overflow-hidden">
+          <div className="mb-4 bg-amber-100 rounded-full h-3 overflow-hidden">
             <div className="bg-orange-500 h-full transition-all" style={{ width: `${(combo / 5) * 100}%` }} />
           </div>
         )}
 
         {/* Progress */}
-        <div className="text-center text-amber-600 font-serif text-sm mb-4">
+        <div className="text-center text-amber-600 font-serif text-base mb-4">
           Câu {currentQuestion + 1} / {flashQuestions.length}
         </div>
-        <div className="bg-amber-200 rounded-full h-1 mb-8">
-          <div className="bg-amber-600 h-1 rounded-full transition-all" style={{ width: `${((currentQuestion + 1) / flashQuestions.length) * 100}%` }} />
+        <div className="bg-amber-200 rounded-full h-1.5 mb-8">
+          <div className="bg-amber-600 h-1.5 rounded-full transition-all" style={{ width: `${((currentQuestion + 1) / flashQuestions.length) * 100}%` }} />
         </div>
 
         {/* Question */}
         <div className="mb-8">
-          <h3 className="font-serif text-xl md:text-2xl text-amber-900 leading-relaxed">{q.question}</h3>
+          <h3 className="font-serif text-2xl md:text-3xl text-amber-900 leading-relaxed">{q.question}</h3>
         </div>
 
         {/* Options */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           {q.options.map((opt, i) => {
             const isSelected = selectedAnswer === i;
             const isCorrect = i === q.correctAnswer;
@@ -477,9 +477,9 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
             }
             return (
               <button key={i} onClick={() => handleRound1Answer(i)} disabled={selectedAnswer !== null}
-                className={`w-full p-4 rounded-lg border-2 transition-all text-left font-serif text-amber-800 ${styles}`}>
-                <span className="flex items-center gap-3">
-                  <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${isSelected ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-700'}`}>
+                className={`w-full p-5 rounded-lg border-2 transition-all text-left font-serif text-lg md:text-xl text-amber-800 ${styles}`}>
+                <span className="flex items-center gap-4">
+                  <span className={`w-10 h-10 rounded-full flex items-center justify-center text-base font-bold ${isSelected ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-700'}`}>
                     {String.fromCharCode(65 + i)}
                   </span>
                   {opt}
@@ -494,24 +494,24 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
 
   const renderRound1Result = () => (
     <article className="max-w-md mx-auto text-center animate-fadeIn">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 text-orange-700 mb-6">
-        <Zap className="w-8 h-8" />
+      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-orange-100 text-orange-700 mb-6">
+        <Zap className="w-10 h-10" />
       </div>
-      <h2 className="font-serif text-3xl text-amber-950 mb-6">Vòng 1 Hoàn Thành!</h2>
+      <h2 className="font-serif text-4xl text-amber-950 mb-6">Vòng 1 Hoàn Thành!</h2>
       
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-8">
-        <div className="font-serif text-6xl text-amber-800 font-bold">{round1Score}</div>
-        <div className="text-amber-600 font-serif">điểm</div>
+        <div className="font-serif text-7xl text-amber-800 font-bold">{round1Score}</div>
+        <div className="text-xl text-amber-600 font-serif">điểm</div>
         <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-amber-200">
-          <div><div className="font-serif text-xl text-amber-800 font-bold">{correctAnswers}/{totalAnswered}</div><div className="text-xs text-amber-500">Đúng</div></div>
-          <div><div className="font-serif text-xl text-amber-800 font-bold">{totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0}%</div><div className="text-xs text-amber-500">Chính xác</div></div>
-          <div><div className="font-serif text-xl text-amber-800 font-bold">{maxCombo}</div><div className="text-xs text-amber-500">Max Combo</div></div>
+          <div><div className="font-serif text-2xl text-amber-800 font-bold">{correctAnswers}/{totalAnswered}</div><div className="text-sm text-amber-500">Đúng</div></div>
+          <div><div className="font-serif text-2xl text-amber-800 font-bold">{totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0}%</div><div className="text-sm text-amber-500">Chính xác</div></div>
+          <div><div className="font-serif text-2xl text-amber-800 font-bold">{maxCombo}</div><div className="text-sm text-amber-500">Max Combo</div></div>
         </div>
       </div>
 
       <button onClick={startRound2}
-        className="w-full py-4 bg-violet-700 hover:bg-violet-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2">
-        Tiếp tục Vòng 2 <ChevronRight className="w-5 h-5" />
+        className="w-full py-5 bg-violet-700 hover:bg-violet-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2">
+        Tiếp tục Vòng 2 <ChevronRight className="w-6 h-6" />
       </button>
     </article>
   );
@@ -523,22 +523,22 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
       <article className="max-w-2xl mx-auto animate-fadeIn">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center">
-              <Brain className="w-6 h-6" />
+            <div className="w-14 h-14 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center">
+              <Brain className="w-7 h-7" />
             </div>
-            <div className="font-serif text-2xl text-amber-900 font-bold">{score} điểm</div>
+            <div className="font-serif text-3xl text-amber-900 font-bold">{score} điểm</div>
           </div>
-          <div className="text-amber-600 font-serif">{currentQuestion + 1}/{caseQuestions.length}</div>
+          <div className="text-lg text-amber-600 font-serif">{currentQuestion + 1}/{caseQuestions.length}</div>
         </div>
 
         <div className="mb-8">
-          <h3 className="font-serif text-xl text-amber-900 mb-4">{q.situation}</h3>
-          <blockquote className="pl-4 border-l-2 border-amber-400 bg-amber-50 p-4 rounded-r-lg">
-            <p className="font-serif text-amber-700 italic">💡 {q.context}</p>
+          <h3 className="font-serif text-2xl md:text-3xl text-amber-900 mb-4">{q.situation}</h3>
+          <blockquote className="pl-5 border-l-2 border-amber-400 bg-amber-50 p-5 rounded-r-lg">
+            <p className="font-serif text-lg md:text-xl text-amber-700 italic">💡 {q.context}</p>
           </blockquote>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {q.options.map((opt, i) => {
             const isSelected = selectedAnswer === i;
             let styles = 'border-amber-200 hover:border-amber-400 hover:bg-amber-50';
@@ -549,24 +549,24 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
             }
             return (
               <button key={i} onClick={() => handleRound2Answer(i)} disabled={showResult}
-                className={`w-full p-4 rounded-lg border-2 transition-all text-left font-serif ${styles}`}>
+                className={`w-full p-5 rounded-lg border-2 transition-all text-left font-serif ${styles}`}>
                 <div className="flex justify-between items-start gap-4">
-                  <span className="text-amber-800">{opt.text}</span>
+                  <span className="text-lg md:text-xl text-amber-800">{opt.text}</span>
                   {showResult && (
-                    <span className={`px-2 py-1 rounded text-sm font-bold ${opt.points === 20 ? 'bg-emerald-500 text-white' : opt.points === 10 ? 'bg-amber-500 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                    <span className={`px-3 py-1.5 rounded text-base font-bold ${opt.points === 20 ? 'bg-emerald-500 text-white' : opt.points === 10 ? 'bg-amber-500 text-white' : 'bg-gray-300 text-gray-600'}`}>
                       +{opt.points}
                     </span>
                   )}
                 </div>
-                {showResult && isSelected && <p className="mt-3 text-sm text-amber-700 bg-amber-100 p-3 rounded">{opt.explanation}</p>}
+                {showResult && isSelected && <p className="mt-3 text-base text-amber-700 bg-amber-100 p-4 rounded">{opt.explanation}</p>}
               </button>
             );
           })}
         </div>
 
         {showResult && (
-          <button onClick={nextRound2Question} className="mt-8 w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif rounded-lg transition-all flex items-center justify-center gap-2">
-            {currentQuestion < caseQuestions.length - 1 ? 'Câu tiếp theo' : 'Tiếp tục Vòng 3'} <ChevronRight className="w-5 h-5" />
+          <button onClick={nextRound2Question} className="mt-8 w-full py-5 bg-amber-700 hover:bg-amber-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2">
+            {currentQuestion < caseQuestions.length - 1 ? 'Câu tiếp theo' : 'Tiếp tục Vòng 3'} <ChevronRight className="w-6 h-6" />
           </button>
         )}
       </article>
@@ -575,23 +575,23 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
 
   const renderRound2Result = () => (
     <article className="max-w-md mx-auto text-center animate-fadeIn">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-100 text-violet-700 mb-6">
-        <Brain className="w-8 h-8" />
+      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-violet-100 text-violet-700 mb-6">
+        <Brain className="w-10 h-10" />
       </div>
-      <h2 className="font-serif text-3xl text-amber-950 mb-6">Vòng 2 Hoàn Thành!</h2>
+      <h2 className="font-serif text-4xl text-amber-950 mb-6">Vòng 2 Hoàn Thành!</h2>
       
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-6">
-        <div className="font-serif text-6xl text-amber-800 font-bold">{round2Score}</div>
-        <div className="text-amber-600 font-serif">điểm</div>
+        <div className="font-serif text-7xl text-amber-800 font-bold">{round2Score}</div>
+        <div className="text-xl text-amber-600 font-serif">điểm</div>
       </div>
 
-      <div className="bg-amber-100 rounded-lg p-4 mb-8">
-        <div className="text-amber-600 text-sm font-serif">Tổng điểm hiện tại</div>
-        <div className="font-serif text-3xl text-amber-800 font-bold">{round1Score + round2Score}</div>
+      <div className="bg-amber-100 rounded-lg p-5 mb-8">
+        <div className="text-amber-600 text-base font-serif">Tổng điểm hiện tại</div>
+        <div className="font-serif text-4xl text-amber-800 font-bold">{round1Score + round2Score}</div>
       </div>
 
-      <button onClick={startRound3} className="w-full py-4 bg-rose-700 hover:bg-rose-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2">
-        Tiếp tục Boss Quiz <ChevronRight className="w-5 h-5" />
+      <button onClick={startRound3} className="w-full py-5 bg-rose-700 hover:bg-rose-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2">
+        Tiếp tục Boss Quiz <ChevronRight className="w-6 h-6" />
       </button>
     </article>
   );
@@ -603,11 +603,11 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
     if (bossGameOver && showResult) {
       return (
         <article className="max-w-md mx-auto text-center animate-fadeIn">
-          <div className="text-7xl mb-4">💀</div>
-          <h2 className="font-serif text-4xl text-amber-950 mb-4">DEFEATED!</h2>
-          <p className="text-amber-600 font-serif mb-2">Boss đã đánh bại bạn!</p>
-          <p className="font-serif text-2xl text-red-600 mb-8">0 điểm (Reset!)</p>
-          <button onClick={nextRound3Question} className="w-full py-4 bg-amber-800 text-white font-serif rounded-lg">
+          <div className="text-8xl mb-4">💀</div>
+          <h2 className="font-serif text-5xl text-amber-950 mb-4">DEFEATED!</h2>
+          <p className="text-xl text-amber-600 font-serif mb-2">Boss đã đánh bại bạn!</p>
+          <p className="font-serif text-3xl text-red-600 mb-8">0 điểm (Reset!)</p>
+          <button onClick={nextRound3Question} className="w-full py-5 bg-amber-800 text-white font-serif text-xl rounded-lg">
             Xem kết quả tổng →
           </button>
         </article>
@@ -618,31 +618,31 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
       <article className="max-w-2xl mx-auto animate-fadeIn">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center">
-              <Skull className="w-6 h-6" />
+            <div className="w-14 h-14 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center">
+              <Skull className="w-7 h-7" />
             </div>
             <div>
-              <div className="font-serif text-2xl text-amber-900 font-bold">{score} điểm</div>
-              <div className="text-rose-600 text-sm font-serif">{q.difficulty === 'extreme' ? '☠️ Cực khó' : '🔥 Khó'}</div>
+              <div className="font-serif text-3xl text-amber-900 font-bold">{score} điểm</div>
+              <div className="text-rose-600 text-base font-serif">{q.difficulty === 'extreme' ? '☠️ Cực khó' : '🔥 Khó'}</div>
             </div>
           </div>
         </div>
 
         {/* Boss HP */}
-        <div className="flex justify-center gap-3 mb-8">
+        <div className="flex justify-center gap-4 mb-8">
           {bossQuestions.map((_, i) => (
-            <div key={i} className={`text-2xl transition-all ${i < currentQuestion ? 'opacity-30' : i === currentQuestion ? 'scale-125' : 'opacity-50'}`}>
+            <div key={i} className={`text-3xl transition-all ${i < currentQuestion ? 'opacity-30' : i === currentQuestion ? 'scale-125' : 'opacity-50'}`}>
               {i < currentQuestion ? '✅' : i === currentQuestion ? '⚔️' : '💀'}
             </div>
           ))}
         </div>
 
-        <div className="mb-8 border-l-4 border-rose-400 pl-4">
-          <div className="text-rose-600 font-serif text-sm mb-2">Câu {currentQuestion + 1}/5</div>
-          <h3 className="font-serif text-xl text-amber-900">{q.question}</h3>
+        <div className="mb-8 border-l-4 border-rose-400 pl-5">
+          <div className="text-rose-600 font-serif text-base mb-2">Câu {currentQuestion + 1}/5</div>
+          <h3 className="font-serif text-2xl md:text-3xl text-amber-900">{q.question}</h3>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {q.options.map((opt, i) => {
             const isSelected = selectedAnswer === i;
             const isCorrect = i === q.correctAnswer;
@@ -653,7 +653,7 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
             }
             return (
               <button key={i} onClick={() => handleRound3Answer(i)} disabled={showResult}
-                className={`w-full p-4 rounded-lg border-2 transition-all text-left font-serif text-amber-800 ${styles}`}>
+                className={`w-full p-5 rounded-lg border-2 transition-all text-left font-serif text-lg md:text-xl text-amber-800 ${styles}`}>
                 {opt}
               </button>
             );
@@ -661,8 +661,8 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
         </div>
 
         {showResult && !bossGameOver && (
-          <button onClick={nextRound3Question} className="mt-8 w-full py-4 bg-rose-700 hover:bg-rose-800 text-white font-serif rounded-lg transition-all flex items-center justify-center gap-2">
-            {currentQuestion < bossQuestions.length - 1 ? 'Tiếp tục chiến đấu' : 'Chiến thắng Boss!'} <ChevronRight className="w-5 h-5" />
+          <button onClick={nextRound3Question} className="mt-8 w-full py-5 bg-rose-700 hover:bg-rose-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2">
+            {currentQuestion < bossQuestions.length - 1 ? 'Tiếp tục chiến đấu' : 'Chiến thắng Boss!'} <ChevronRight className="w-6 h-6" />
           </button>
         )}
       </article>
@@ -674,20 +674,20 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
     const isDefeated = bossGameOver;
     return (
       <article className="max-w-md mx-auto text-center animate-fadeIn">
-        <div className="text-7xl mb-4">{isPerfect ? '👑' : isDefeated ? '💀' : '⚔️'}</div>
-        <h2 className="font-serif text-3xl text-amber-950 mb-6">
+        <div className="text-8xl mb-4">{isPerfect ? '👑' : isDefeated ? '💀' : '⚔️'}</div>
+        <h2 className="font-serif text-4xl text-amber-950 mb-6">
           {isPerfect ? 'PERFECT VICTORY!' : isDefeated ? 'DEFEATED!' : 'Vòng 3 Hoàn Thành!'}
         </h2>
         
         <div className={`rounded-lg p-8 mb-8 ${isDefeated ? 'bg-gray-100 border border-gray-300' : 'bg-amber-50 border border-amber-200'}`}>
-          <div className="font-serif text-6xl text-amber-800 font-bold">{round3Score}</div>
-          <div className="text-amber-600 font-serif">điểm</div>
-          {isPerfect && <div className="mt-4 text-emerald-600 font-serif font-bold">💎 +100 BONUS!</div>}
-          {isDefeated && <div className="mt-4 text-red-500 font-serif text-sm">⚠️ Sai = Reset về 0!</div>}
+          <div className="font-serif text-7xl text-amber-800 font-bold">{round3Score}</div>
+          <div className="text-xl text-amber-600 font-serif">điểm</div>
+          {isPerfect && <div className="mt-4 text-xl text-emerald-600 font-serif font-bold">💎 +100 BONUS!</div>}
+          {isDefeated && <div className="mt-4 text-red-500 font-serif text-base">⚠️ Sai = Reset về 0!</div>}
         </div>
 
-        <button onClick={() => setPhase('gameover')} className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2">
-          Xem Kết Quả <ChevronRight className="w-5 h-5" />
+        <button onClick={() => setPhase('gameover')} className="w-full py-5 bg-emerald-700 hover:bg-emerald-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2">
+          Xem Kết Quả <ChevronRight className="w-6 h-6" />
         </button>
       </article>
     );
@@ -699,31 +699,31 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
     const quote = HCM_QUOTES[Math.floor(Math.random() * HCM_QUOTES.length)];
     return (
       <article className="max-w-lg mx-auto text-center animate-fadeIn">
-        <div className="text-7xl mb-4">{rankInfo.icon}</div>
-        <h2 className="font-serif text-2xl text-amber-800 mb-2">{rankInfo.rank}</h2>
-        <div className="bg-amber-100 rounded-full px-4 py-1 inline-block mb-6">
-          <span className="text-amber-700 font-serif">👤 {playerName}</span>
+        <div className="text-8xl mb-4">{rankInfo.icon}</div>
+        <h2 className="font-serif text-3xl text-amber-800 mb-2">{rankInfo.rank}</h2>
+        <div className="bg-amber-100 rounded-full px-5 py-2 inline-block mb-6">
+          <span className="text-lg text-amber-700 font-serif">👤 {playerName}</span>
         </div>
         
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-6">
-          <div className="font-serif text-6xl text-amber-800 font-bold mb-2">{total}</div>
-          <div className="text-amber-600 font-serif mb-6">Tổng điểm</div>
+          <div className="font-serif text-7xl text-amber-800 font-bold mb-2">{total}</div>
+          <div className="text-xl text-amber-600 font-serif mb-6">Tổng điểm</div>
           <div className="grid grid-cols-3 gap-4 pt-6 border-t border-amber-200">
-            <div><div className="font-serif text-xl text-orange-600 font-bold">{round1Score}</div><div className="text-xs text-amber-500">⚡ Flash</div></div>
-            <div><div className="font-serif text-xl text-violet-600 font-bold">{round2Score}</div><div className="text-xs text-amber-500">🧠 Case</div></div>
-            <div><div className="font-serif text-xl text-rose-600 font-bold">{round3Score}</div><div className="text-xs text-amber-500">👹 Boss</div></div>
+            <div><div className="font-serif text-2xl text-orange-600 font-bold">{round1Score}</div><div className="text-sm text-amber-500">⚡ Flash</div></div>
+            <div><div className="font-serif text-2xl text-violet-600 font-bold">{round2Score}</div><div className="text-sm text-amber-500">🧠 Case</div></div>
+            <div><div className="font-serif text-2xl text-rose-600 font-bold">{round3Score}</div><div className="text-sm text-amber-500">👹 Boss</div></div>
           </div>
           <div className="mt-4 pt-4 border-t border-amber-200">
-            {isSaving ? <div className="text-amber-600 font-serif animate-pulse">⏳ Đang lưu...</div> : saved ? <div className="text-emerald-600 font-serif">✅ Đã lưu!</div> : null}
+            {isSaving ? <div className="text-lg text-amber-600 font-serif animate-pulse">⏳ Đang lưu...</div> : saved ? <div className="text-lg text-emerald-600 font-serif">✅ Đã lưu!</div> : null}
           </div>
         </div>
 
         {earnedBadges.length > 0 && (
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-            <div className="text-sm font-serif text-amber-700 mb-3">🏅 Huy hiệu đạt được</div>
-            <div className="flex flex-wrap justify-center gap-2">
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-6">
+            <div className="text-base font-serif text-amber-700 mb-3">🏅 Huy hiệu đạt được</div>
+            <div className="flex flex-wrap justify-center gap-3">
               {earnedBadges.map(b => (
-                <span key={b} className="px-3 py-1 bg-amber-200 rounded-full text-sm text-amber-800 font-serif">
+                <span key={b} className="px-4 py-2 bg-amber-200 rounded-full text-base text-amber-800 font-serif">
                   {BADGES[b].icon} {BADGES[b].name}
                 </span>
               ))}
@@ -733,18 +733,18 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
 
         {/* Quote */}
         <blockquote className="relative mb-8">
-          <Quote className="absolute -top-2 -left-2 w-6 h-6 text-amber-300" />
-          <div className="pl-6 pr-4 py-3 border-l-2 border-amber-400 bg-amber-50 text-left">
-            <p className="font-serif text-amber-700 italic">{quote}</p>
+          <Quote className="absolute -top-2 -left-2 w-8 h-8 text-amber-300" />
+          <div className="pl-8 pr-4 py-4 border-l-2 border-amber-400 bg-amber-50 text-left">
+            <p className="font-serif text-lg md:text-xl text-amber-700 italic">{quote}</p>
           </div>
         </blockquote>
 
         <button onClick={() => { loadLeaderboard(); setPhase('leaderboard'); }}
-          className="w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif rounded-lg transition-all flex items-center justify-center gap-2 mb-3">
-          <Trophy className="w-5 h-5" /> Bảng Xếp Hạng
+          className="w-full py-5 bg-amber-700 hover:bg-amber-800 text-white font-serif text-xl rounded-lg transition-all flex items-center justify-center gap-2 mb-3">
+          <Trophy className="w-6 h-6" /> Bảng Xếp Hạng
         </button>
-        <button onClick={startGame} className="w-full py-3 border border-amber-300 text-amber-700 font-serif rounded-lg hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
-          <RotateCcw className="w-5 h-5" /> Chơi Lại
+        <button onClick={startGame} className="w-full py-4 border border-amber-300 text-amber-700 font-serif text-lg rounded-lg hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
+          <RotateCcw className="w-6 h-6" /> Chơi Lại
         </button>
       </article>
     );
@@ -753,36 +753,36 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
   const renderLeaderboard = () => (
     <article className="max-w-2xl mx-auto animate-fadeIn">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-700 mb-4">
-          <Trophy className="w-8 h-8" />
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-100 text-amber-700 mb-4">
+          <Trophy className="w-10 h-10" />
         </div>
-        <h2 className="font-serif text-3xl text-amber-950 mb-2">Bảng Xếp Hạng</h2>
-        <button onClick={loadLeaderboard} disabled={isLoading} className="text-amber-600 hover:text-amber-800 font-serif text-sm underline disabled:opacity-50">
+        <h2 className="font-serif text-4xl text-amber-950 mb-2">Bảng Xếp Hạng</h2>
+        <button onClick={loadLeaderboard} disabled={isLoading} className="text-amber-600 hover:text-amber-800 font-serif text-base underline disabled:opacity-50">
           {isLoading ? '⏳ Đang tải...' : '🔄 Làm mới'}
         </button>
       </div>
 
       <div className="border border-amber-200 rounded-lg overflow-hidden bg-amber-50/50">
         {isLoading ? (
-          <div className="p-16 text-center"><div className="text-4xl mb-4 animate-bounce">⏳</div><div className="text-amber-600 font-serif">Đang tải...</div></div>
+          <div className="p-16 text-center"><div className="text-5xl mb-4 animate-bounce">⏳</div><div className="text-lg text-amber-600 font-serif">Đang tải...</div></div>
         ) : leaderboard.length === 0 ? (
-          <div className="p-16 text-center"><div className="text-4xl mb-4">📭</div><div className="text-amber-600 font-serif">Chưa có dữ liệu</div>
-            <button onClick={loadLeaderboard} className="mt-4 px-6 py-2 bg-amber-600 text-white rounded-lg font-serif">🔄 Thử lại</button>
+          <div className="p-16 text-center"><div className="text-5xl mb-4">📭</div><div className="text-lg text-amber-600 font-serif">Chưa có dữ liệu</div>
+            <button onClick={loadLeaderboard} className="mt-4 px-6 py-3 bg-amber-600 text-white rounded-lg font-serif text-lg">🔄 Thử lại</button>
           </div>
         ) : (
           <div className="divide-y divide-amber-200">
             {leaderboard.map((e, i) => (
-              <div key={e.id} className={`p-4 flex items-center gap-4 ${i < 3 ? 'bg-amber-100/50' : ''} ${e.playerName === playerName ? 'bg-emerald-50 border-l-4 border-emerald-500' : ''}`}>
-                <div className="text-2xl w-10 text-center font-serif">{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : <span className="text-amber-400">{i + 1}</span>}</div>
+              <div key={e.id} className={`p-5 flex items-center gap-4 ${i < 3 ? 'bg-amber-100/50' : ''} ${e.playerName === playerName ? 'bg-emerald-50 border-l-4 border-emerald-500' : ''}`}>
+                <div className="text-3xl w-12 text-center font-serif">{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : <span className="text-amber-400">{i + 1}</span>}</div>
                 <div className="flex-1">
-                  <div className="font-serif font-bold text-amber-900 flex items-center gap-2">
-                    {e.playerName} {e.playerName === playerName && <span className="text-xs bg-emerald-500 text-white px-2 py-0.5 rounded">Bạn</span>}
+                  <div className="font-serif text-lg font-bold text-amber-900 flex items-center gap-2">
+                    {e.playerName} {e.playerName === playerName && <span className="text-sm bg-emerald-500 text-white px-2 py-0.5 rounded">Bạn</span>}
                   </div>
-                  <div className="text-xs text-amber-500 font-serif">⚡{e.flashScore} 🧠{e.caseScore} 👹{e.bossScore}</div>
+                  <div className="text-sm text-amber-500 font-serif">⚡{e.flashScore} 🧠{e.caseScore} 👹{e.bossScore}</div>
                 </div>
                 <div className="text-right">
-                  <div className="font-serif text-2xl font-bold text-amber-800">{e.totalScore}</div>
-                  <div className="text-xs text-amber-500 font-serif">{e.rank}</div>
+                  <div className="font-serif text-3xl font-bold text-amber-800">{e.totalScore}</div>
+                  <div className="text-sm text-amber-500 font-serif">{e.rank}</div>
                 </div>
               </div>
             ))}
@@ -791,8 +791,8 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
       </div>
 
       <div className="mt-8 flex gap-4 justify-center">
-        <button onClick={goToEnterName} className="px-6 py-3 bg-amber-700 hover:bg-amber-800 text-white font-serif rounded-lg">Chơi Ngay</button>
-        <button onClick={() => setPhase('intro')} className="px-6 py-3 border border-amber-300 text-amber-700 font-serif rounded-lg hover:bg-amber-50">← Menu</button>
+        <button onClick={goToEnterName} className="px-8 py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif text-lg rounded-lg">Chơi Ngay</button>
+        <button onClick={() => setPhase('intro')} className="px-8 py-4 border border-amber-300 text-amber-700 font-serif text-lg rounded-lg hover:bg-amber-50">← Menu</button>
       </div>
     </article>
   );
@@ -808,23 +808,23 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
       />
 
       {/* Navigation */}
-      <nav className="flex justify-between items-center px-6 py-4 border-b border-amber-200/50 relative z-10">
+      <nav className="flex justify-between items-center px-6 py-5 border-b border-amber-200/50 relative z-10">
         <button
           onClick={() => ['intro', 'leaderboard', 'enter_name'].includes(phase) ? onNavigate('study') : setPhase('intro')}
-          className="flex items-center gap-2 text-amber-700 hover:text-amber-900 font-serif transition-colors"
+          className="flex items-center gap-2 text-lg text-amber-700 hover:text-amber-900 font-serif transition-colors"
         >
-          <Home className="w-5 h-5" />
+          <Home className="w-6 h-6" />
           <span className="hidden sm:inline">{['intro', 'leaderboard', 'enter_name'].includes(phase) ? 'Trang chủ' : 'Menu'}</span>
         </button>
         
-        <h1 className="font-serif text-xl text-amber-800">🎮 Quiz Game</h1>
+        <h1 className="font-serif text-2xl text-amber-800">🎮 Quiz Game</h1>
 
         <div className="flex items-center gap-4">
           {playerName && !['intro', 'enter_name', 'leaderboard'].includes(phase) && (
-            <span className="text-amber-600 font-serif text-sm">👤 {playerName}</span>
+            <span className="text-amber-600 font-serif text-base">👤 {playerName}</span>
           )}
           <button onClick={() => onNavigate('slide')} className="text-amber-600 hover:text-amber-800 transition-colors">
-            <BookOpen className="w-5 h-5" />
+            <BookOpen className="w-6 h-6" />
           </button>
         </div>
       </nav>

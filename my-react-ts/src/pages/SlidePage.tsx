@@ -6,35 +6,12 @@ import {
   Home, 
   Gamepad2, 
   BookOpen,
-  Star,
-  Flag,
-  Building2,
-  Users,
-  Heart,
-  Sprout,
-  Mic,
-  Scale,
-  HandMetal,
-  Sparkles,
   Quote
 } from 'lucide-react';
 
 interface SlidePageProps {
   onNavigate: (mode: 'study' | 'timeline' | 'game' | 'slide') => void;
 }
-
-// Map slide icons to Lucide components
-const iconMap: Record<string, React.ReactNode> = {
-  "🌟": <Sparkles className="w-8 h-8" />,
-  "📌": <Flag className="w-8 h-8" />,
-  "🏛️": <Building2 className="w-8 h-8" />,
-  "🙋": <Users className="w-8 h-8" />,
-  "✋": <HandMetal className="w-8 h-8" />,
-  "❤️": <Heart className="w-8 h-8" />,
-  "⚖️": <Scale className="w-8 h-8" />,
-  "🌱": <Sprout className="w-8 h-8" />,
-  "🎤": <Mic className="w-8 h-8" />,
-};
 
 const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -144,17 +121,14 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
             <div className="text-center mb-8">
               <span className="inline-flex items-center gap-3 text-amber-600">
                 <span className="h-px w-12 bg-amber-400"></span>
-                <span className="font-serif text-sm tracking-[0.3em] uppercase">Chương IV</span>
+                <span className="font-serif text-base tracking-[0.3em] uppercase">Chương IV</span>
                 <span className="h-px w-12 bg-amber-400"></span>
               </span>
             </div>
 
-            {/* Title with Icon */}
+            {/* Title */}
             <header className="text-center mb-10">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-700 mb-6">
-                {iconMap[slide.icon] || <Star className="w-8 h-8" />}
-              </div>
-              <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-amber-950 leading-tight mb-4">
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-amber-950 leading-tight mb-4">
                 {slide.title}
               </h1>
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto"></div>
@@ -195,7 +169,7 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
                     // Section headers (starts with emoji or uppercase)
                     if (line.startsWith('⚠️') || line.startsWith('🎯')) {
                       return (
-                        <h3 key={index} className="font-serif text-lg font-semibold text-amber-800 mt-6 mb-2">
+                        <h3 key={index} className="font-serif text-xl md:text-2xl font-semibold text-amber-800 mt-6 mb-2">
                           {line}
                         </h3>
                       );
@@ -204,7 +178,7 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
                     // Sub-headers (ends with :)
                     if (line.endsWith(':') && !line.startsWith('✦') && !line.startsWith('✔')) {
                       return (
-                        <h4 key={index} className="font-serif text-base font-semibold text-amber-800 mt-4 mb-1">
+                        <h4 key={index} className="font-serif text-lg md:text-xl font-semibold text-amber-800 mt-4 mb-1">
                           {line}
                         </h4>
                       );
@@ -215,8 +189,8 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
                       const isCheckmark = line.startsWith('✔');
                       return (
                         <div key={index} className="flex items-start gap-3 pl-2">
-                          <span className={`mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0 ${isCheckmark ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
-                          <p className="font-serif text-base md:text-lg leading-relaxed text-amber-800">
+                          <span className={`mt-2.5 w-2 h-2 rounded-full flex-shrink-0 ${isCheckmark ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
+                          <p className="font-serif text-lg md:text-xl leading-relaxed text-amber-800">
                             {line.replace(/^[✦✔]\s*/, '')}
                           </p>
                         </div>
@@ -226,7 +200,7 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
                     // Indented text
                     if (line.startsWith('   ')) {
                       return (
-                        <p key={index} className="font-serif text-base leading-relaxed text-amber-700 italic pl-8">
+                        <p key={index} className="font-serif text-lg md:text-xl leading-relaxed text-amber-700 italic pl-8">
                           {line.trim()}
                         </p>
                       );
@@ -234,7 +208,7 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
                     
                     // Regular paragraph
                     return (
-                      <p key={index} className="font-serif text-base md:text-lg leading-relaxed text-amber-800">
+                      <p key={index} className="font-serif text-lg md:text-xl leading-relaxed text-amber-800">
                         {line}
                       </p>
                     );
@@ -244,13 +218,13 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
                 {/* Quote/Highlight - Book style */}
                 {slide.highlight && (
                   <blockquote className="mt-10 relative">
-                    <Quote className="absolute -top-2 -left-2 w-8 h-8 text-amber-300 opacity-60" />
-                    <div className="pl-8 pr-4 py-4 border-l-2 border-amber-400 bg-gradient-to-r from-amber-50 to-transparent">
-                      <p className="font-serif text-lg md:text-xl italic text-amber-700 leading-relaxed">
+                    <Quote className="absolute -top-2 -left-2 w-10 h-10 text-amber-300 opacity-60" />
+                    <div className="pl-8 pr-4 py-5 border-l-2 border-amber-400 bg-gradient-to-r from-amber-50 to-transparent">
+                      <p className="font-serif text-xl md:text-2xl italic text-amber-700 leading-relaxed">
                         {slide.highlight}
                       </p>
                     </div>
-                    <Quote className="absolute -bottom-2 right-4 w-8 h-8 text-amber-300 opacity-60 rotate-180" />
+                    <Quote className="absolute -bottom-2 right-4 w-10 h-10 text-amber-300 opacity-60 rotate-180" />
                   </blockquote>
                 )}
               </div>
