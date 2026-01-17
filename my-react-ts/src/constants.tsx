@@ -465,22 +465,22 @@ export const CHAPTER_IV_DATA: ChapterData = {
       title: "II. Tư tưởng Hồ Chí Minh về Nhà nước của dân, do dân, vì dân",
       subtitle: "3. Nhà nước trong sạch, vững mạnh",
       content: [
-        "【1. KIỂM SOÁT QUYỀN LỰC NHÀ NƯỚC (tr.84-85)】Hồ Chí Minh cho rằng quyền lực luôn có xu hướng bị tha hóa nếu không được kiểm soát. Cách thức kiểm soát: Phải kết hợp giữa kiểm soát từ trên xuống (của Đảng, của cấp trên) và kiểm soát từ dưới lên (của nhân dân). Người nhấn mạnh: 'Dân có quyền bãi miễn đại biểu Quốc hội và đại biểu Hội đồng nhân dân nếu những đại biểu ấy tỏ ra không xứng đáng với sự tín nhiệm của nhân dân'. Về vai trò của nhân dân trong kiểm soát: 'Phải dựa vào quần chúng mà kiểm soát cán bộ.'",
-        "【2. ĐẤU TRANH CHỐNG CÁC CĂN BỆNH 'GIẶC NỘI XÂM' (tr.85-87)】Hồ Chí Minh coi Tham ô, Lãng phí, Quan liêu là những kẻ thù nguy hiểm như giặc ngoại xâm vì chúng phá hoại từ bên trong. Người gọi đây là 'Giặc ở trong lòng', 'Giặc nội xâm'.",
+        "【1. KIỂM SOÁT QUYỀN LỰC NHÀ NƯỚC 】Hồ Chí Minh cho rằng quyền lực luôn có xu hướng bị tha hóa nếu không được kiểm soát. Cách thức kiểm soát: Phải kết hợp giữa kiểm soát từ trên xuống (của Đảng, của cấp trên) và kiểm soát từ dưới lên (của nhân dân). Người nhấn mạnh: 'Dân có quyền bãi miễn đại biểu Quốc hội và đại biểu Hội đồng nhân dân nếu những đại biểu ấy tỏ ra không xứng đáng với sự tín nhiệm của nhân dân'. Về vai trò của nhân dân trong kiểm soát: 'Phải dựa vào quần chúng mà kiểm soát cán bộ.'",
+        "【2. ĐẤU TRANH CHỐNG CÁC CĂN BỆNH 'GIẶC NỘI XÂM' 】Hồ Chí Minh coi Tham ô, Lãng phí, Quan liêu là những kẻ thù nguy hiểm như giặc ngoại xâm vì chúng phá hoại từ bên trong. Người gọi đây là 'Giặc ở trong lòng', 'Giặc nội xâm'.",
         "• THAM Ô: Là hành động 'trộm cắp của công làm của riêng'.",
         "• LÃNG PHÍ: Tuy không ăn cắp nhưng gây thiệt hại cho dân, có khi tác hại còn hơn cả tham ô.",
         "• QUAN LIÊU: Là nguồn gốc đẻ ra tham ô, lãng phí. Người quan liêu là người 'không đi sâu đi sát, chỉ biết ngồi bàn giấy mà chỉ tay năm ngón'.",
-        "Về tính nghiêm minh của pháp luật: 'Pháp luật phải thẳng tay trừng trị những kẻ bất liêm, bất kỳ kẻ ấy ở địa vị nào, làm nghề nghiệp gì' (tr.87).",
-        "【3. XÂY DỰNG ĐỘI NGŨ CÁN BỘ, CÔNG CHỨC (tr.87-88)】Đây là 'cái gốc' của mọi công việc. Nhà nước mạnh hay yếu là do cán bộ.",
+        "Về tính nghiêm minh của pháp luật: 'Pháp luật phải thẳng tay trừng trị những kẻ bất liêm, bất kỳ kẻ ấy ở địa vị nào, làm nghề nghiệp gì' .",
+        "【3. XÂY DỰNG ĐỘI NGŨ CÁN BỘ, CÔNG CHỨC 】Đây là 'cái gốc' của mọi công việc. Nhà nước mạnh hay yếu là do cán bộ.",
         "• TIÊU CHUẨN CÁN BỘ - Phải vừa có Đức, vừa có Tài (Vừa hồng vừa chuyên): ĐỨC - Phải tuyệt đối trung thành với cách mạng, cần, kiệm, liêm, chính; TÀI - Phải có năng lực quản lý nhà nước, hiểu biết pháp luật.",
         "• MỐI QUAN HỆ VỚI DÂN: Cán bộ không phải là 'ông cách mạng' mà là người phục vụ dân. 'Cán bộ nhà nước từ trên xuống dưới đều là đầy tớ của nhân dân'.",
-        "【CÁC VẤN ĐỀ KHÁC (tr.88)】Hồ Chí Minh cũng nhắc nhở về việc chống Chủ nghĩa cá nhân, Đặc quyền đặc lợi và tình trạng Chia rẽ, kiêu ngạo trong bộ máy nhà nước."
+        "【CÁC VẤN ĐỀ KHÁC 】Hồ Chí Minh cũng nhắc nhở về việc chống Chủ nghĩa cá nhân, Đặc quyền đặc lợi và tình trạng Chia rẽ, kiêu ngạo trong bộ máy nhà nước."
       ],
       quotes: [
-        "Cán bộ là cái gốc của mọi công việc. (tr.87)",
-        "Việc gì lợi cho dân, ta phải hết sức làm. Việc gì hại cho dân, ta phải hết sức tránh. (tr.88)",
-        "Cán bộ nhà nước từ trên xuống dưới đều là đầy tớ của nhân dân. (tr.88)",
-        "Pháp luật phải thẳng tay trừng trị những kẻ bất liêm, bất kỳ kẻ ấy ở địa vị nào. (tr.87)",
+        "Cán bộ là cái gốc của mọi công việc.",
+        "Việc gì lợi cho dân, ta phải hết sức làm. Việc gì hại cho dân, ta phải hết sức tránh",
+        "Cán bộ nhà nước từ trên xuống dưới đều là đầy tớ của nhân dân.",
+        "Pháp luật phải thẳng tay trừng trị những kẻ bất liêm, bất kỳ kẻ ấy ở địa vị nào.",
         "Phải dựa vào quần chúng mà kiểm soát cán bộ."
       ]
     }
