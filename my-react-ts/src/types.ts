@@ -44,3 +44,13 @@ export interface TimelinePeriod {
   color: string;
   events: TimelineEvent[];
 }
+
+export interface Slide {
+  id: number;
+  icon: string;
+  title: string;
+  content: string[];
+  highlight?: string;
+  bgColor: string;
+  image?: string;
+}

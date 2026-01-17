@@ -1,9 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { saveScore, getLeaderboard } from '../firebase';
 import type { LeaderboardEntry } from '../firebase';
+import { 
+  Home, 
+  BookOpen, 
+  Trophy,
+  Zap,
+  Brain,
+  Skull,
+  ChevronRight,
+  RotateCcw,
+  User,
+  Quote
+} from 'lucide-react';
 
 interface QuizGamePageProps {
-  onNavigate: (mode: 'study' | 'timeline' | 'game') => void;
+  onNavigate: (mode: 'study' | 'timeline' | 'game' | 'slide') => void;
 }
 
 // Types
@@ -121,31 +133,13 @@ const BOSS_QUESTIONS: BossQuestion[] = [
   { id: 'b5', question: 'Sự kết hợp nào tạo nên ĐCSVN theo HCM?', options: ['Mác + nông dân', 'Mác-Lênin + công nhân + yêu nước', 'Dân tộc + trí thức', 'Cần Vương + Duy Tân'], correctAnswer: 1, difficulty: 'extreme' },
 ];
 
-const BADGES: { [key: string]: { name: string; icon: string; color: string } } = {
-  speedster: { name: 'Tia Chớp', icon: '⚡', color: 'from-yellow-400 to-orange-500' },
-  perfectCombo: { name: 'Combo Master', icon: '🔥', color: 'from-red-400 to-pink-500' },
-  wisePerson: { name: 'Người Hiểu Đạo', icon: '🧠', color: 'from-purple-400 to-indigo-500' },
-  bossSlayer: { name: 'Chiến Thắng Boss', icon: '👑', color: 'from-amber-400 to-yellow-500' },
-  perfectBoss: { name: 'Hoàn Hảo', icon: '💎', color: 'from-cyan-400 to-blue-500' },
+const BADGES: { [key: string]: { name: string; icon: string } } = {
+  speedster: { name: 'Tia Chớp', icon: '⚡' },
+  perfectCombo: { name: 'Combo Master', icon: '🔥' },
+  wisePerson: { name: 'Người Hiểu Đạo', icon: '🧠' },
+  bossSlayer: { name: 'Chiến Thắng Boss', icon: '👑' },
+  perfectBoss: { name: 'Hoàn Hảo', icon: '💎' },
 };
-
-// Floating shapes component - light version
-const FloatingShapes = () => (
-  <div className="fixed inset-0 overflow-hidden pointer-events-none">
-    {[...Array(12)].map((_, i) => (
-      <div
-        key={i}
-        className={`absolute rounded-full animate-float ${i % 3 === 0 ? 'w-16 h-16 bg-purple-200/30' : i % 3 === 1 ? 'w-10 h-10 bg-blue-200/30' : 'w-8 h-8 bg-pink-200/30'}`}
-        style={{
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          animationDelay: `${Math.random() * 5}s`,
-          animationDuration: `${8 + Math.random() * 12}s`,
-        }}
-      />
-    ))}
-  </div>
-);
 
 type GamePhase = 'intro' | 'enter_name' | 'round1' | 'round1_result' | 'round2' | 'round2_result' | 'round3' | 'round3_result' | 'gameover' | 'leaderboard';
 
@@ -331,61 +325,49 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
   const getTotalScore = () => round1Score + round2Score + round3Score;
 
   const getRank = (total: number) => {
-    if (total >= 250) return { rank: 'Chiến sĩ tiên phong', icon: '🥇', color: 'from-yellow-300 via-amber-400 to-yellow-500' };
-    if (total >= 180) return { rank: 'Đảng viên mẫu mực', icon: '🥈', color: 'from-slate-300 via-gray-400 to-slate-500' };
-    if (total >= 120) return { rank: 'Công dân tích cực', icon: '🥉', color: 'from-amber-500 via-orange-500 to-amber-600' };
-    return { rank: 'Tập sự tìm hiểu', icon: '🎒', color: 'from-blue-400 via-cyan-400 to-blue-500' };
-  };
-
-  const getBackground = () => {
-    switch (phase) {
-      case 'round1': case 'round1_result':
-        return 'bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-50';
-      case 'round2': case 'round2_result':
-        return 'bg-gradient-to-br from-violet-100 via-purple-100 to-indigo-50';
-      case 'round3': case 'round3_result':
-        return 'bg-gradient-to-br from-rose-100 via-pink-100 to-red-50';
-      case 'gameover':
-        return 'bg-gradient-to-br from-emerald-100 via-teal-100 to-cyan-50';
-      default:
-        return 'bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-50';
-    }
+    if (total >= 250) return { rank: 'Chiến sĩ tiên phong', icon: '🥇' };
+    if (total >= 180) return { rank: 'Đảng viên mẫu mực', icon: '🥈' };
+    if (total >= 120) return { rank: 'Công dân tích cực', icon: '🥉' };
+    return { rank: 'Tập sự tìm hiểu', icon: '🎒' };
   };
 
   // RENDER FUNCTIONS
   const renderIntro = () => (
-    <div className="flex flex-col items-center justify-center min-h-[75vh] text-center animate-fadeIn">
-      {/* Logo Animation */}
-      <div className="relative mb-8">
-        <div className="text-9xl animate-bounce drop-shadow-2xl">🎮</div>
-        <div className="absolute -inset-4 bg-purple-200/50 rounded-full blur-2xl animate-pulse" />
+    <article className="max-w-2xl mx-auto text-center animate-fadeIn">
+      {/* Chapter decoration */}
+      <div className="mb-8">
+        <span className="inline-flex items-center gap-3 text-amber-600">
+          <span className="h-px w-12 bg-amber-400"></span>
+          <span className="font-serif text-sm tracking-[0.3em] uppercase">Thử Thách</span>
+          <span className="h-px w-12 bg-amber-400"></span>
+        </span>
       </div>
-      
-      <h1 className="text-5xl md:text-7xl font-black text-gray-800 mb-3 tracking-tight">
-        QUIZ <span className="text-purple-600">GAME</span>
-      </h1>
-      <p className="text-xl md:text-2xl text-gray-600 mb-10 font-light">
-        Thử thách kiến thức Tư tưởng Hồ Chí Minh
-      </p>
-      
-      {/* Game Rules Card */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 mb-10 max-w-lg border border-gray-200 shadow-xl">
-        <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center justify-center gap-2">
-          <span className="text-2xl">📋</span> 3 Vòng Thi Đấu
-        </h3>
+
+      {/* Title */}
+      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-100 text-amber-700 mb-6">
+        <Trophy className="w-10 h-10" />
+      </div>
+      <h1 className="font-serif text-4xl md:text-5xl text-amber-950 mb-4">Quiz Game</h1>
+      <p className="font-serif text-lg text-amber-700 mb-10">Thử thách kiến thức Tư tưởng Hồ Chí Minh</p>
+
+      <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-10"></div>
+
+      {/* Game Rules */}
+      <div className="text-left mb-10">
+        <h3 className="font-serif text-xl text-amber-800 mb-6 text-center">Ba vòng thi đấu</h3>
         <div className="space-y-4">
           {[
-            { icon: '⚡', title: 'Flash Quiz', desc: '60 giây • +10đ/câu • +20đ combo', color: 'from-yellow-400 to-orange-500' },
-            { icon: '🧠', title: 'Tình Huống', desc: 'Xử lý đạo đức • +20đ/+10đ/+0đ', color: 'from-purple-400 to-indigo-500' },
-            { icon: '👹', title: 'Boss Quiz', desc: '5 câu khó • +30đ/câu • +100đ bonus', color: 'from-red-400 to-pink-500' },
+            { icon: <Zap className="w-6 h-6" />, title: 'Vòng 1: Flash Quiz', desc: '60 giây • +10đ mỗi câu đúng • +20đ combo 5 câu', color: 'bg-orange-100 text-orange-700' },
+            { icon: <Brain className="w-6 h-6" />, title: 'Vòng 2: Tình Huống', desc: 'Xử lý đạo đức thực tế • +20đ / +10đ / +0đ', color: 'bg-violet-100 text-violet-700' },
+            { icon: <Skull className="w-6 h-6" />, title: 'Vòng 3: Boss Quiz', desc: '5 câu khó • +30đ mỗi câu • +100đ bonus hoàn hảo', color: 'bg-rose-100 text-rose-700' },
           ].map((round, i) => (
-            <div key={i} className="flex items-center gap-4 bg-gray-50 rounded-2xl p-4 hover:bg-gray-100 transition-all hover:scale-[1.02] border border-gray-100">
-              <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${round.color} flex items-center justify-center text-2xl shadow-lg`}>
+            <div key={i} className="flex items-center gap-4 p-4 border border-amber-200 rounded-lg bg-amber-50/50">
+              <div className={`w-12 h-12 rounded-full ${round.color} flex items-center justify-center`}>
                 {round.icon}
               </div>
-              <div className="text-left flex-1">
-                <div className="font-bold text-gray-800 text-lg">{round.title}</div>
-                <div className="text-sm text-gray-500">{round.desc}</div>
+              <div className="flex-1">
+                <div className="font-serif font-semibold text-amber-900">{round.title}</div>
+                <div className="text-sm text-amber-600">{round.desc}</div>
               </div>
             </div>
           ))}
@@ -394,113 +376,110 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
 
       {/* Buttons */}
       <button onClick={goToEnterName}
-        className="group px-12 py-5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-2xl font-bold rounded-2xl shadow-xl hover:shadow-purple-500/30 hover:scale-105 transition-all duration-300">
-        <span className="flex items-center gap-3">
-          🚀 BẮT ĐẦU CHƠI
-          <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </span>
+        className="w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2 mb-4">
+        Bắt đầu chơi <ChevronRight className="w-5 h-5" />
       </button>
 
       <button onClick={() => { loadLeaderboard(); setPhase('leaderboard'); }}
-        className="mt-5 px-8 py-3 bg-white/80 backdrop-blur text-gray-700 font-bold rounded-xl hover:bg-white transition-all border border-gray-200 shadow-md">
-        🏆 Bảng Xếp Hạng
+        className="w-full py-3 border border-amber-300 text-amber-700 font-serif rounded-lg hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
+        <Trophy className="w-5 h-5" /> Bảng xếp hạng
       </button>
-    </div>
+
+      {/* Quote decoration */}
+      <div className="mt-12 flex justify-center">
+        <div className="flex items-center gap-2 text-amber-400">
+          <span className="h-px w-16 bg-amber-300"></span>
+          <span className="text-2xl">❧</span>
+          <span className="h-px w-16 bg-amber-300"></span>
+        </div>
+      </div>
+    </article>
   );
 
   const renderEnterName = () => (
-    <div className="flex flex-col items-center justify-center min-h-[75vh] text-center animate-fadeIn">
-      <div className="relative mb-6">
-        <div className="text-8xl">👤</div>
-        <div className="absolute -inset-4 bg-purple-200/50 rounded-full blur-2xl" />
+    <article className="max-w-md mx-auto text-center animate-fadeIn">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-700 mb-6">
+        <User className="w-8 h-8" />
       </div>
-      <h2 className="text-4xl font-bold text-gray-800 mb-2">Nhập Tên Của Bạn</h2>
-      <p className="text-gray-500 mb-8">Tên sẽ được hiển thị trên bảng xếp hạng</p>
+      <h2 className="font-serif text-3xl text-amber-950 mb-2">Nhập tên của bạn</h2>
+      <p className="font-serif text-amber-600 mb-8">Tên sẽ được hiển thị trên bảng xếp hạng</p>
       
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 w-full max-w-md border border-gray-200 shadow-xl">
-        <input
-          type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && playerName.trim() && startGame()}
-          placeholder="Tên của bạn..."
-          className="w-full px-6 py-5 text-2xl bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-300 focus:border-purple-400 text-gray-800 text-center font-bold placeholder-gray-400 mb-6"
-          maxLength={15} autoFocus
-        />
-        <button onClick={startGame} disabled={!playerName.trim()}
-          className="w-full py-5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-xl font-bold rounded-2xl hover:shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed">
-          🎮 Bắt Đầu Game!
-        </button>
-      </div>
+      <input
+        type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && playerName.trim() && startGame()}
+        placeholder="Tên của bạn..."
+        className="w-full px-6 py-4 text-xl bg-amber-50 border-2 border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-amber-900 text-center font-serif placeholder-amber-400 mb-6"
+        maxLength={15} autoFocus
+      />
+      <button onClick={startGame} disabled={!playerName.trim()}
+        className="w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif text-lg rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+        Bắt đầu Game
+      </button>
       
-      <button onClick={() => setPhase('intro')} className="mt-8 text-gray-500 hover:text-gray-800 transition-colors">
+      <button onClick={() => setPhase('intro')} className="mt-6 text-amber-600 hover:text-amber-800 font-serif transition-colors">
         ← Quay lại
       </button>
-    </div>
+    </article>
   );
 
   const renderRound1 = () => {
     if (flashQuestions.length === 0) return null;
     const q = flashQuestions[currentQuestion];
-    const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 100;
     const isLowTime = timeLeft <= 10;
     
     return (
-      <div className="max-w-2xl mx-auto animate-fadeIn">
+      <article className="max-w-2xl mx-auto animate-fadeIn">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg">⚡</div>
+            <div className="w-12 h-12 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center">
+              <Zap className="w-6 h-6" />
+            </div>
             <div>
-              <div className="text-3xl font-black text-gray-800">{score + comboBonus}</div>
-              <div className="text-sm text-gray-500 flex items-center gap-2">
-                {combo > 0 && <span className="text-orange-500 font-bold animate-pulse">🔥 x{combo}</span>}
-                <span>📊 {accuracy}%</span>
-              </div>
+              <div className="font-serif text-2xl text-amber-900 font-bold">{score + comboBonus} điểm</div>
+              {combo > 0 && <div className="text-orange-600 text-sm font-serif">🔥 Combo x{combo}</div>}
             </div>
           </div>
-          <div className={`px-6 py-4 rounded-2xl font-black text-4xl shadow-lg transition-all ${isLowTime ? 'bg-red-500 text-white animate-pulse scale-110' : 'bg-white text-orange-500 border-2 border-orange-200'}`}>
-            {timeLeft}
+          <div className={`px-5 py-3 rounded-lg font-serif text-3xl font-bold transition-all ${isLowTime ? 'bg-red-100 text-red-700 animate-pulse' : 'bg-amber-100 text-amber-800'}`}>
+            {timeLeft}s
           </div>
         </div>
 
         {/* Combo Bar */}
         {combo > 0 && (
-          <div className="mb-4 bg-orange-100 rounded-full p-1">
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all shadow-inner"
-              style={{ width: `${(combo / 5) * 100}%` }} />
-            <div className="text-xs text-orange-600 text-center mt-1 font-bold">🔥 COMBO {combo}/5 → +20 BONUS!</div>
+          <div className="mb-4 bg-amber-100 rounded-full h-2 overflow-hidden">
+            <div className="bg-orange-500 h-full transition-all" style={{ width: `${(combo / 5) * 100}%` }} />
           </div>
         )}
 
         {/* Progress */}
-        <div className="bg-gray-200 rounded-full h-2 mb-8">
-          <div className="bg-gradient-to-r from-orange-400 to-amber-500 h-2 rounded-full transition-all" style={{ width: `${((currentQuestion + 1) / flashQuestions.length) * 100}%` }} />
+        <div className="text-center text-amber-600 font-serif text-sm mb-4">
+          Câu {currentQuestion + 1} / {flashQuestions.length}
+        </div>
+        <div className="bg-amber-200 rounded-full h-1 mb-8">
+          <div className="bg-amber-600 h-1 rounded-full transition-all" style={{ width: `${((currentQuestion + 1) / flashQuestions.length) * 100}%` }} />
         </div>
 
-        {/* Question Card */}
-        <div className="bg-white rounded-3xl p-8 shadow-xl mb-6 border border-gray-200">
-          <div className="text-sm text-orange-500 font-bold mb-3 flex items-center gap-2">
-            <span className="bg-orange-100 px-3 py-1 rounded-full">Câu {currentQuestion + 1}/{flashQuestions.length}</span>
-          </div>
-          <h3 className="text-2xl font-bold text-gray-800 leading-relaxed">{q.question}</h3>
+        {/* Question */}
+        <div className="mb-8">
+          <h3 className="font-serif text-xl md:text-2xl text-amber-900 leading-relaxed">{q.question}</h3>
         </div>
 
         {/* Options */}
-        <div className="grid gap-4">
+        <div className="space-y-3">
           {q.options.map((opt, i) => {
             const isSelected = selectedAnswer === i;
             const isCorrect = i === q.correctAnswer;
-            let styles = 'bg-white hover:bg-gray-50 hover:scale-[1.02] border-gray-200';
+            let styles = 'border-amber-200 hover:border-amber-400 hover:bg-amber-50';
             if (selectedAnswer !== null) {
-              if (isCorrect) styles = 'bg-emerald-100 border-emerald-500 scale-[1.02]';
-              else if (isSelected) styles = 'bg-red-100 border-red-500 scale-95 opacity-70';
+              if (isCorrect) styles = 'border-emerald-500 bg-emerald-50';
+              else if (isSelected) styles = 'border-red-400 bg-red-50 opacity-70';
             }
             return (
               <button key={i} onClick={() => handleRound1Answer(i)} disabled={selectedAnswer !== null}
-                className={`p-5 rounded-2xl border-2 transition-all text-left shadow-md font-semibold text-gray-800 text-lg ${styles}`}>
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left font-serif text-amber-800 ${styles}`}>
                 <span className="flex items-center gap-3">
-                  <span className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold ${isSelected ? 'bg-orange-500 text-white' : 'bg-gray-100'}`}>
+                  <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${isSelected ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-700'}`}>
                     {String.fromCharCode(65 + i)}
                   </span>
                   {opt}
@@ -509,108 +488,112 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
             );
           })}
         </div>
-      </div>
+      </article>
     );
   };
 
-  const renderRound1Result = () => {
-    const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
-    return (
-      <div className="max-w-md mx-auto text-center animate-fadeIn">
-        <div className="text-8xl mb-4">⚡</div>
-        <h2 className="text-4xl font-black text-gray-800 mb-4">Vòng 1 Hoàn Thành!</h2>
-        <div className="bg-gradient-to-br from-yellow-400 via-orange-400 to-amber-500 rounded-3xl p-10 shadow-xl mb-8">
-          <div className="text-8xl font-black text-white drop-shadow-lg">{round1Score}</div>
-          <div className="text-white/90 text-xl">điểm</div>
-          <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/30">
-            <div><div className="text-3xl font-bold text-white">{correctAnswers}/{totalAnswered}</div><div className="text-xs text-white/70">Đúng</div></div>
-            <div><div className="text-3xl font-bold text-white">{accuracy}%</div><div className="text-xs text-white/70">Accuracy</div></div>
-            <div><div className="text-3xl font-bold text-white">{maxCombo}</div><div className="text-xs text-white/70">Max Combo</div></div>
-          </div>
-        </div>
-        <button onClick={startRound2}
-          className="w-full py-5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-xl rounded-2xl hover:shadow-xl transition-all">
-          🧠 Tiếp tục Vòng 2 →
-        </button>
+  const renderRound1Result = () => (
+    <article className="max-w-md mx-auto text-center animate-fadeIn">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 text-orange-700 mb-6">
+        <Zap className="w-8 h-8" />
       </div>
-    );
-  };
+      <h2 className="font-serif text-3xl text-amber-950 mb-6">Vòng 1 Hoàn Thành!</h2>
+      
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-8">
+        <div className="font-serif text-6xl text-amber-800 font-bold">{round1Score}</div>
+        <div className="text-amber-600 font-serif">điểm</div>
+        <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-amber-200">
+          <div><div className="font-serif text-xl text-amber-800 font-bold">{correctAnswers}/{totalAnswered}</div><div className="text-xs text-amber-500">Đúng</div></div>
+          <div><div className="font-serif text-xl text-amber-800 font-bold">{totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0}%</div><div className="text-xs text-amber-500">Chính xác</div></div>
+          <div><div className="font-serif text-xl text-amber-800 font-bold">{maxCombo}</div><div className="text-xs text-amber-500">Max Combo</div></div>
+        </div>
+      </div>
+
+      <button onClick={startRound2}
+        className="w-full py-4 bg-violet-700 hover:bg-violet-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2">
+        Tiếp tục Vòng 2 <ChevronRight className="w-5 h-5" />
+      </button>
+    </article>
+  );
 
   const renderRound2 = () => {
     if (caseQuestions.length === 0) return null;
     const q = caseQuestions[currentQuestion];
     return (
-      <div className="max-w-3xl mx-auto animate-fadeIn">
-        <div className="flex items-center justify-between mb-8">
+      <article className="max-w-2xl mx-auto animate-fadeIn">
+        <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-3xl shadow-lg">🧠</div>
-            <div>
-              <div className="text-3xl font-black text-gray-800">{score}</div>
-              <div className="text-sm text-gray-500">điểm</div>
+            <div className="w-12 h-12 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center">
+              <Brain className="w-6 h-6" />
             </div>
+            <div className="font-serif text-2xl text-amber-900 font-bold">{score} điểm</div>
           </div>
-          <div className="bg-purple-100 px-5 py-2 rounded-full text-purple-700 font-bold border border-purple-200">{currentQuestion + 1}/{caseQuestions.length}</div>
+          <div className="text-amber-600 font-serif">{currentQuestion + 1}/{caseQuestions.length}</div>
         </div>
 
-        <div className="bg-white rounded-3xl p-8 shadow-2xl mb-6">
-          <div className="flex items-center gap-2 mb-4"><span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-bold">📋 Tình huống</span></div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">{q.situation}</h3>
-          <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-5 rounded-2xl border-l-4 border-purple-500">
-            <p className="text-gray-600 italic flex items-center gap-2">💡 {q.context}</p>
-          </div>
+        <div className="mb-8">
+          <h3 className="font-serif text-xl text-amber-900 mb-4">{q.situation}</h3>
+          <blockquote className="pl-4 border-l-2 border-amber-400 bg-amber-50 p-4 rounded-r-lg">
+            <p className="font-serif text-amber-700 italic">💡 {q.context}</p>
+          </blockquote>
         </div>
 
-        <div className="grid gap-4">
+        <div className="space-y-3">
           {q.options.map((opt, i) => {
             const isSelected = selectedAnswer === i;
-            let styles = 'bg-white/95 hover:bg-white hover:scale-[1.01] border-transparent';
+            let styles = 'border-amber-200 hover:border-amber-400 hover:bg-amber-50';
             if (showResult) {
-              if (opt.points === 20) styles = 'bg-emerald-50 border-emerald-500';
-              else if (opt.points === 10) styles = 'bg-amber-50 border-amber-500';
-              else if (isSelected) styles = 'bg-red-50 border-red-500';
+              if (opt.points === 20) styles = 'border-emerald-500 bg-emerald-50';
+              else if (opt.points === 10) styles = 'border-amber-500 bg-amber-50';
+              else if (isSelected) styles = 'border-red-400 bg-red-50';
             }
             return (
               <button key={i} onClick={() => handleRound2Answer(i)} disabled={showResult}
-                className={`p-5 rounded-2xl border-3 transition-all text-left shadow-lg ${styles}`}>
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left font-serif ${styles}`}>
                 <div className="flex justify-between items-start gap-4">
-                  <span className="font-semibold text-gray-800 text-lg">{opt.text}</span>
+                  <span className="text-amber-800">{opt.text}</span>
                   {showResult && (
-                    <span className={`px-3 py-1 rounded-full text-sm font-bold ${opt.points === 20 ? 'bg-emerald-500 text-white' : opt.points === 10 ? 'bg-amber-500 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                    <span className={`px-2 py-1 rounded text-sm font-bold ${opt.points === 20 ? 'bg-emerald-500 text-white' : opt.points === 10 ? 'bg-amber-500 text-white' : 'bg-gray-300 text-gray-600'}`}>
                       +{opt.points}
                     </span>
                   )}
                 </div>
-                {showResult && isSelected && <p className="mt-4 text-sm text-gray-600 bg-gray-100 p-4 rounded-xl">{opt.explanation}</p>}
+                {showResult && isSelected && <p className="mt-3 text-sm text-amber-700 bg-amber-100 p-3 rounded">{opt.explanation}</p>}
               </button>
             );
           })}
         </div>
 
         {showResult && (
-          <button onClick={nextRound2Question} className="mt-8 w-full py-5 bg-white text-purple-600 font-bold text-xl rounded-2xl hover:shadow-xl transition-all">
-            {currentQuestion < caseQuestions.length - 1 ? 'Câu tiếp theo →' : '👹 Tiếp tục Vòng 3 →'}
+          <button onClick={nextRound2Question} className="mt-8 w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif rounded-lg transition-all flex items-center justify-center gap-2">
+            {currentQuestion < caseQuestions.length - 1 ? 'Câu tiếp theo' : 'Tiếp tục Vòng 3'} <ChevronRight className="w-5 h-5" />
           </button>
         )}
-      </div>
+      </article>
     );
   };
 
   const renderRound2Result = () => (
-    <div className="max-w-md mx-auto text-center animate-fadeIn">
-      <div className="text-8xl mb-4">🧠</div>
-      <h2 className="text-4xl font-black text-gray-800 mb-4">Vòng 2 Hoàn Thành!</h2>
-      <div className="bg-gradient-to-br from-purple-500 via-indigo-500 to-blue-600 rounded-3xl p-10 shadow-xl mb-6">
-        <div className="text-8xl font-black text-white drop-shadow-lg">{round2Score}</div>
-        <div className="text-white/90 text-xl">điểm</div>
+    <article className="max-w-md mx-auto text-center animate-fadeIn">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-100 text-violet-700 mb-6">
+        <Brain className="w-8 h-8" />
       </div>
-      <div className="bg-white rounded-2xl p-5 mb-8 border border-gray-200 shadow-md">
-        <div className="text-gray-500 text-sm mb-1">Tổng điểm hiện tại</div>
-        <div className="text-4xl font-black text-gray-800">{round1Score + round2Score}</div>
+      <h2 className="font-serif text-3xl text-amber-950 mb-6">Vòng 2 Hoàn Thành!</h2>
+      
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-6">
+        <div className="font-serif text-6xl text-amber-800 font-bold">{round2Score}</div>
+        <div className="text-amber-600 font-serif">điểm</div>
       </div>
-      <button onClick={startRound3} className="w-full py-5 bg-gradient-to-r from-rose-500 to-red-600 text-white font-bold text-xl rounded-2xl hover:shadow-xl transition-all">
-        👹 Tiếp tục BOSS QUIZ →
+
+      <div className="bg-amber-100 rounded-lg p-4 mb-8">
+        <div className="text-amber-600 text-sm font-serif">Tổng điểm hiện tại</div>
+        <div className="font-serif text-3xl text-amber-800 font-bold">{round1Score + round2Score}</div>
+      </div>
+
+      <button onClick={startRound3} className="w-full py-4 bg-rose-700 hover:bg-rose-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2">
+        Tiếp tục Boss Quiz <ChevronRight className="w-5 h-5" />
       </button>
-    </div>
+    </article>
   );
 
   const renderRound3 = () => {
@@ -619,64 +602,58 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
     
     if (bossGameOver && showResult) {
       return (
-        <div className="max-w-md mx-auto text-center animate-fadeIn">
-          <div className="text-9xl mb-4 animate-pulse">💀</div>
-          <h2 className="text-5xl font-black text-gray-800 mb-4">DEFEATED!</h2>
-          <p className="text-gray-600 mb-2">Boss đã đánh bại bạn!</p>
-          <p className="text-3xl font-bold text-red-500 mb-8">0 điểm (Reset!)</p>
-          <button onClick={nextRound3Question} className="w-full py-5 bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold text-xl rounded-2xl shadow-lg">
+        <article className="max-w-md mx-auto text-center animate-fadeIn">
+          <div className="text-7xl mb-4">💀</div>
+          <h2 className="font-serif text-4xl text-amber-950 mb-4">DEFEATED!</h2>
+          <p className="text-amber-600 font-serif mb-2">Boss đã đánh bại bạn!</p>
+          <p className="font-serif text-2xl text-red-600 mb-8">0 điểm (Reset!)</p>
+          <button onClick={nextRound3Question} className="w-full py-4 bg-amber-800 text-white font-serif rounded-lg">
             Xem kết quả tổng →
           </button>
-        </div>
+        </article>
       );
     }
     
     return (
-      <div className="max-w-3xl mx-auto animate-fadeIn">
+      <article className="max-w-2xl mx-auto animate-fadeIn">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center text-3xl shadow-lg animate-pulse">👹</div>
-            <div>
-              <div className="text-sm text-gray-500">{q.difficulty === 'extreme' ? '☠️ CỰC KHÓ' : '🔥 KHÓ'}</div>
-              <div className="text-3xl font-black text-gray-800">{score}</div>
+            <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center">
+              <Skull className="w-6 h-6" />
             </div>
-          </div>
-          <div className="text-right">
-            <div className="text-xs text-gray-500 mb-1">Boss HP</div>
-            <div className="w-32 bg-gray-200 rounded-full h-4 overflow-hidden">
-              <div className="bg-gradient-to-r from-red-500 to-pink-500 h-full transition-all" style={{ width: `${((bossQuestions.length - currentQuestion) / bossQuestions.length) * 100}%` }} />
+            <div>
+              <div className="font-serif text-2xl text-amber-900 font-bold">{score} điểm</div>
+              <div className="text-rose-600 text-sm font-serif">{q.difficulty === 'extreme' ? '☠️ Cực khó' : '🔥 Khó'}</div>
             </div>
           </div>
         </div>
 
+        {/* Boss HP */}
         <div className="flex justify-center gap-3 mb-8">
           {bossQuestions.map((_, i) => (
-            <div key={i} className={`text-3xl transition-all ${i < currentQuestion ? 'opacity-30 scale-75' : i === currentQuestion ? 'scale-125 animate-bounce' : 'opacity-50'}`}>
+            <div key={i} className={`text-2xl transition-all ${i < currentQuestion ? 'opacity-30' : i === currentQuestion ? 'scale-125' : 'opacity-50'}`}>
               {i < currentQuestion ? '✅' : i === currentQuestion ? '⚔️' : '💀'}
             </div>
           ))}
         </div>
 
-        <div className="bg-white rounded-3xl p-8 shadow-xl mb-6 border-2 border-red-200">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">⚔️ Câu {currentQuestion + 1}/5</span>
-            {q.difficulty === 'extreme' && <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">EXTREME</span>}
-          </div>
-          <h3 className="text-2xl font-bold text-gray-800">{q.question}</h3>
+        <div className="mb-8 border-l-4 border-rose-400 pl-4">
+          <div className="text-rose-600 font-serif text-sm mb-2">Câu {currentQuestion + 1}/5</div>
+          <h3 className="font-serif text-xl text-amber-900">{q.question}</h3>
         </div>
 
-        <div className="grid gap-4">
+        <div className="space-y-3">
           {q.options.map((opt, i) => {
             const isSelected = selectedAnswer === i;
             const isCorrect = i === q.correctAnswer;
-            let styles = 'bg-white hover:bg-gray-50 hover:scale-[1.01] border-gray-200';
+            let styles = 'border-amber-200 hover:border-rose-400 hover:bg-rose-50';
             if (showResult) {
-              if (isCorrect) styles = 'bg-emerald-100 border-emerald-500';
-              else if (isSelected) styles = 'bg-red-100 border-red-500 opacity-70';
+              if (isCorrect) styles = 'border-emerald-500 bg-emerald-50';
+              else if (isSelected) styles = 'border-red-400 bg-red-50 opacity-70';
             }
             return (
               <button key={i} onClick={() => handleRound3Answer(i)} disabled={showResult}
-                className={`p-5 rounded-2xl border-2 transition-all text-left shadow-md font-semibold text-gray-800 text-lg ${styles}`}>
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left font-serif text-amber-800 ${styles}`}>
                 {opt}
               </button>
             );
@@ -684,11 +661,11 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
         </div>
 
         {showResult && !bossGameOver && (
-          <button onClick={nextRound3Question} className="mt-8 w-full py-5 bg-gradient-to-r from-rose-500 to-red-600 text-white font-bold text-xl rounded-2xl hover:shadow-xl transition-all">
-            {currentQuestion < bossQuestions.length - 1 ? '⚔️ Tiếp tục chiến đấu' : '👑 Chiến thắng Boss!'}
+          <button onClick={nextRound3Question} className="mt-8 w-full py-4 bg-rose-700 hover:bg-rose-800 text-white font-serif rounded-lg transition-all flex items-center justify-center gap-2">
+            {currentQuestion < bossQuestions.length - 1 ? 'Tiếp tục chiến đấu' : 'Chiến thắng Boss!'} <ChevronRight className="w-5 h-5" />
           </button>
         )}
-      </div>
+      </article>
     );
   };
 
@@ -696,21 +673,23 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
     const isPerfect = bossCorrect === 5;
     const isDefeated = bossGameOver;
     return (
-      <div className="max-w-md mx-auto text-center animate-fadeIn">
-        <div className="text-9xl mb-4">{isPerfect ? '👑' : isDefeated ? '💀' : '⚔️'}</div>
-        <h2 className="text-4xl font-black text-gray-800 mb-4">
+      <article className="max-w-md mx-auto text-center animate-fadeIn">
+        <div className="text-7xl mb-4">{isPerfect ? '👑' : isDefeated ? '💀' : '⚔️'}</div>
+        <h2 className="font-serif text-3xl text-amber-950 mb-6">
           {isPerfect ? 'PERFECT VICTORY!' : isDefeated ? 'DEFEATED!' : 'Vòng 3 Hoàn Thành!'}
         </h2>
-        <div className={`rounded-3xl p-10 shadow-xl mb-8 ${isDefeated ? 'bg-gradient-to-br from-gray-600 to-gray-800' : 'bg-gradient-to-br from-red-500 via-pink-500 to-rose-600'}`}>
-          <div className="text-8xl font-black text-white drop-shadow-lg">{round3Score}</div>
-          <div className="text-white/90 text-xl">điểm</div>
-          {isPerfect && <div className="mt-4 text-yellow-300 font-bold text-xl animate-pulse">💎 +100 BONUS!</div>}
-          {isDefeated && <div className="mt-4 text-red-300 text-sm">⚠️ Sai = Reset về 0!</div>}
+        
+        <div className={`rounded-lg p-8 mb-8 ${isDefeated ? 'bg-gray-100 border border-gray-300' : 'bg-amber-50 border border-amber-200'}`}>
+          <div className="font-serif text-6xl text-amber-800 font-bold">{round3Score}</div>
+          <div className="text-amber-600 font-serif">điểm</div>
+          {isPerfect && <div className="mt-4 text-emerald-600 font-serif font-bold">💎 +100 BONUS!</div>}
+          {isDefeated && <div className="mt-4 text-red-500 font-serif text-sm">⚠️ Sai = Reset về 0!</div>}
         </div>
-        <button onClick={() => setPhase('gameover')} className="w-full py-5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold text-xl rounded-2xl hover:shadow-xl transition-all">
-          🏆 Xem Kết Quả →
+
+        <button onClick={() => setPhase('gameover')} className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-serif text-lg rounded-lg transition-all flex items-center justify-center gap-2">
+          Xem Kết Quả <ChevronRight className="w-5 h-5" />
         </button>
-      </div>
+      </article>
     );
   };
 
@@ -719,32 +698,32 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
     const rankInfo = getRank(total);
     const quote = HCM_QUOTES[Math.floor(Math.random() * HCM_QUOTES.length)];
     return (
-      <div className="max-w-lg mx-auto text-center animate-fadeIn">
-        <div className="text-9xl mb-4 animate-bounce">{rankInfo.icon}</div>
-        <h2 className={`text-3xl font-black bg-gradient-to-r ${rankInfo.color} bg-clip-text text-transparent mb-2`}>{rankInfo.rank}</h2>
-        <div className="bg-emerald-100 rounded-full px-6 py-2 inline-block mb-6 border border-emerald-200">
-          <span className="text-emerald-700 font-bold">👤 {playerName}</span>
+      <article className="max-w-lg mx-auto text-center animate-fadeIn">
+        <div className="text-7xl mb-4">{rankInfo.icon}</div>
+        <h2 className="font-serif text-2xl text-amber-800 mb-2">{rankInfo.rank}</h2>
+        <div className="bg-amber-100 rounded-full px-4 py-1 inline-block mb-6">
+          <span className="text-amber-700 font-serif">👤 {playerName}</span>
         </div>
         
-        <div className="bg-white rounded-3xl p-8 shadow-xl mb-6 border border-gray-200">
-          <div className="text-8xl font-black text-gray-800 mb-2">{total}</div>
-          <div className="text-gray-500 mb-6">Tổng điểm</div>
-          <div className="grid grid-cols-3 gap-4 border-t pt-6">
-            <div><div className="text-3xl font-bold text-orange-500">{round1Score}</div><div className="text-xs text-gray-400">⚡ Flash</div></div>
-            <div><div className="text-3xl font-bold text-purple-500">{round2Score}</div><div className="text-xs text-gray-400">🧠 Case</div></div>
-            <div><div className="text-3xl font-bold text-red-500">{round3Score}</div><div className="text-xs text-gray-400">👹 Boss</div></div>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-8 mb-6">
+          <div className="font-serif text-6xl text-amber-800 font-bold mb-2">{total}</div>
+          <div className="text-amber-600 font-serif mb-6">Tổng điểm</div>
+          <div className="grid grid-cols-3 gap-4 pt-6 border-t border-amber-200">
+            <div><div className="font-serif text-xl text-orange-600 font-bold">{round1Score}</div><div className="text-xs text-amber-500">⚡ Flash</div></div>
+            <div><div className="font-serif text-xl text-violet-600 font-bold">{round2Score}</div><div className="text-xs text-amber-500">🧠 Case</div></div>
+            <div><div className="font-serif text-xl text-rose-600 font-bold">{round3Score}</div><div className="text-xs text-amber-500">👹 Boss</div></div>
           </div>
-          <div className="mt-6 pt-4 border-t">
-            {isSaving ? <div className="text-blue-500 animate-pulse">⏳ Đang lưu...</div> : saved ? <div className="text-emerald-500">✅ Đã lưu!</div> : null}
+          <div className="mt-4 pt-4 border-t border-amber-200">
+            {isSaving ? <div className="text-amber-600 font-serif animate-pulse">⏳ Đang lưu...</div> : saved ? <div className="text-emerald-600 font-serif">✅ Đã lưu!</div> : null}
           </div>
         </div>
 
         {earnedBadges.length > 0 && (
-          <div className="bg-white rounded-2xl p-5 mb-6 border border-gray-200 shadow-md">
-            <div className="text-sm font-bold text-gray-600 mb-3">🏅 Huy hiệu</div>
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+            <div className="text-sm font-serif text-amber-700 mb-3">🏅 Huy hiệu đạt được</div>
             <div className="flex flex-wrap justify-center gap-2">
               {earnedBadges.map(b => (
-                <span key={b} className={`px-4 py-2 bg-gradient-to-r ${BADGES[b].color} rounded-full text-sm text-white font-bold shadow-lg`}>
+                <span key={b} className="px-3 py-1 bg-amber-200 rounded-full text-sm text-amber-800 font-serif">
                   {BADGES[b].icon} {BADGES[b].name}
                 </span>
               ))}
@@ -752,53 +731,58 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
           </div>
         )}
 
-        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-5 mb-6 border border-amber-200">
-          <div className="text-amber-600 text-sm mb-2 font-semibold">✨ Lời Bác dạy</div>
-          <div className="italic text-gray-700">{quote}</div>
-        </div>
+        {/* Quote */}
+        <blockquote className="relative mb-8">
+          <Quote className="absolute -top-2 -left-2 w-6 h-6 text-amber-300" />
+          <div className="pl-6 pr-4 py-3 border-l-2 border-amber-400 bg-amber-50 text-left">
+            <p className="font-serif text-amber-700 italic">{quote}</p>
+          </div>
+        </blockquote>
 
         <button onClick={() => { loadLeaderboard(); setPhase('leaderboard'); }}
-          className="w-full py-5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-xl rounded-2xl hover:shadow-xl transition-all mb-4">
-          🏆 Bảng Xếp Hạng
+          className="w-full py-4 bg-amber-700 hover:bg-amber-800 text-white font-serif rounded-lg transition-all flex items-center justify-center gap-2 mb-3">
+          <Trophy className="w-5 h-5" /> Bảng Xếp Hạng
         </button>
-        <button onClick={startGame} className="w-full py-4 bg-white text-gray-700 font-bold rounded-2xl hover:bg-gray-50 transition-all border border-gray-200 shadow-md">
-          🔄 Chơi Lại
+        <button onClick={startGame} className="w-full py-3 border border-amber-300 text-amber-700 font-serif rounded-lg hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
+          <RotateCcw className="w-5 h-5" /> Chơi Lại
         </button>
-      </div>
+      </article>
     );
   };
 
   const renderLeaderboard = () => (
-    <div className="max-w-2xl mx-auto animate-fadeIn">
+    <article className="max-w-2xl mx-auto animate-fadeIn">
       <div className="text-center mb-8">
-        <div className="text-7xl mb-4">🏆</div>
-        <h2 className="text-4xl font-black text-gray-800 mb-2">Bảng Xếp Hạng</h2>
-        <button onClick={loadLeaderboard} disabled={isLoading} className="text-gray-500 hover:text-gray-800 text-sm underline disabled:opacity-50">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 text-amber-700 mb-4">
+          <Trophy className="w-8 h-8" />
+        </div>
+        <h2 className="font-serif text-3xl text-amber-950 mb-2">Bảng Xếp Hạng</h2>
+        <button onClick={loadLeaderboard} disabled={isLoading} className="text-amber-600 hover:text-amber-800 font-serif text-sm underline disabled:opacity-50">
           {isLoading ? '⏳ Đang tải...' : '🔄 Làm mới'}
         </button>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
+      <div className="border border-amber-200 rounded-lg overflow-hidden bg-amber-50/50">
         {isLoading ? (
-          <div className="p-16 text-center"><div className="text-6xl mb-4 animate-bounce">⏳</div><div className="text-gray-500">Đang tải...</div></div>
+          <div className="p-16 text-center"><div className="text-4xl mb-4 animate-bounce">⏳</div><div className="text-amber-600 font-serif">Đang tải...</div></div>
         ) : leaderboard.length === 0 ? (
-          <div className="p-16 text-center"><div className="text-6xl mb-4">📭</div><div className="text-gray-500">Chưa có dữ liệu</div>
-            <button onClick={loadLeaderboard} className="mt-4 px-6 py-2 bg-purple-500 text-white rounded-xl">🔄 Thử lại</button>
+          <div className="p-16 text-center"><div className="text-4xl mb-4">📭</div><div className="text-amber-600 font-serif">Chưa có dữ liệu</div>
+            <button onClick={loadLeaderboard} className="mt-4 px-6 py-2 bg-amber-600 text-white rounded-lg font-serif">🔄 Thử lại</button>
           </div>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-amber-200">
             {leaderboard.map((e, i) => (
-              <div key={e.id} className={`p-5 flex items-center gap-4 ${i < 3 ? 'bg-gradient-to-r from-yellow-50 to-amber-50' : ''} ${e.playerName === playerName ? 'bg-emerald-50 border-l-4 border-emerald-500' : ''}`}>
-                <div className="text-3xl w-12 text-center">{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : <span className="text-gray-400 text-xl font-bold">{i + 1}</span>}</div>
+              <div key={e.id} className={`p-4 flex items-center gap-4 ${i < 3 ? 'bg-amber-100/50' : ''} ${e.playerName === playerName ? 'bg-emerald-50 border-l-4 border-emerald-500' : ''}`}>
+                <div className="text-2xl w-10 text-center font-serif">{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : <span className="text-amber-400">{i + 1}</span>}</div>
                 <div className="flex-1">
-                  <div className="font-bold text-gray-800 text-lg flex items-center gap-2">
-                    {e.playerName} {e.playerName === playerName && <span className="text-xs bg-emerald-500 text-white px-2 py-0.5 rounded-full">Bạn</span>}
+                  <div className="font-serif font-bold text-amber-900 flex items-center gap-2">
+                    {e.playerName} {e.playerName === playerName && <span className="text-xs bg-emerald-500 text-white px-2 py-0.5 rounded">Bạn</span>}
                   </div>
-                  <div className="text-xs text-gray-400">⚡{e.flashScore} 🧠{e.caseScore} 👹{e.bossScore}</div>
+                  <div className="text-xs text-amber-500 font-serif">⚡{e.flashScore} 🧠{e.caseScore} 👹{e.bossScore}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-black text-gray-800">{e.totalScore}</div>
-                  <div className="text-xs text-gray-400">{e.rank}</div>
+                  <div className="font-serif text-2xl font-bold text-amber-800">{e.totalScore}</div>
+                  <div className="text-xs text-amber-500 font-serif">{e.rank}</div>
                 </div>
               </div>
             ))}
@@ -807,61 +791,71 @@ const QuizGamePage: React.FC<QuizGamePageProps> = ({ onNavigate }) => {
       </div>
 
       <div className="mt-8 flex gap-4 justify-center">
-        <button onClick={goToEnterName} className="px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold rounded-2xl shadow-lg">🚀 Chơi Ngay</button>
-        <button onClick={() => setPhase('intro')} className="px-8 py-4 bg-white text-gray-700 font-bold rounded-2xl shadow-md border border-gray-200">← Menu</button>
+        <button onClick={goToEnterName} className="px-6 py-3 bg-amber-700 hover:bg-amber-800 text-white font-serif rounded-lg">Chơi Ngay</button>
+        <button onClick={() => setPhase('intro')} className="px-6 py-3 border border-amber-300 text-amber-700 font-serif rounded-lg hover:bg-amber-50">← Menu</button>
       </div>
-    </div>
+    </article>
   );
 
   return (
-    <div className={`min-h-screen w-full relative overflow-hidden ${getBackground()}`}>
-      <FloatingShapes />
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pink-100/30 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-[#faf8f5] flex flex-col">
+      {/* Book texture background */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-30"
+        style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4c4a8' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")` 
+        }}
+      />
 
-      <div className="relative z-10 min-h-screen flex flex-col">
-        <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-gray-200 shadow-sm">
-          <div className="flex items-center justify-between px-6 py-4">
-            <button onClick={() => ['intro', 'leaderboard', 'enter_name'].includes(phase) ? onNavigate('study') : setPhase('intro')}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all font-medium border border-gray-200">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-              {['intro', 'leaderboard', 'enter_name'].includes(phase) ? 'Trang chủ' : 'Menu'}
-            </button>
-            <h1 className="text-2xl font-black text-gray-800">🎮 Quiz Game</h1>
-            {playerName && !['intro', 'enter_name', 'leaderboard'].includes(phase) ? (
-              <div className="px-4 py-2 bg-purple-100 rounded-xl text-purple-700 font-medium border border-purple-200">👤 {playerName}</div>
-            ) : <div className="w-32" />}
-          </div>
-        </nav>
+      {/* Navigation */}
+      <nav className="flex justify-between items-center px-6 py-4 border-b border-amber-200/50 relative z-10">
+        <button
+          onClick={() => ['intro', 'leaderboard', 'enter_name'].includes(phase) ? onNavigate('study') : setPhase('intro')}
+          className="flex items-center gap-2 text-amber-700 hover:text-amber-900 font-serif transition-colors"
+        >
+          <Home className="w-5 h-5" />
+          <span className="hidden sm:inline">{['intro', 'leaderboard', 'enter_name'].includes(phase) ? 'Trang chủ' : 'Menu'}</span>
+        </button>
+        
+        <h1 className="font-serif text-xl text-amber-800">🎮 Quiz Game</h1>
 
-        <div className="flex-1 p-6 md:p-10">
-          {phase === 'intro' && renderIntro()}
-          {phase === 'enter_name' && renderEnterName()}
-          {phase === 'round1' && renderRound1()}
-          {phase === 'round1_result' && renderRound1Result()}
-          {phase === 'round2' && renderRound2()}
-          {phase === 'round2_result' && renderRound2Result()}
-          {phase === 'round3' && renderRound3()}
-          {phase === 'round3_result' && renderRound3Result()}
-          {phase === 'gameover' && renderGameOver()}
-          {phase === 'leaderboard' && renderLeaderboard()}
+        <div className="flex items-center gap-4">
+          {playerName && !['intro', 'enter_name', 'leaderboard'].includes(phase) && (
+            <span className="text-amber-600 font-serif text-sm">👤 {playerName}</span>
+          )}
+          <button onClick={() => onNavigate('slide')} className="text-amber-600 hover:text-amber-800 transition-colors">
+            <BookOpen className="w-5 h-5" />
+          </button>
         </div>
+      </nav>
+
+      {/* Content */}
+      <div className="flex-1 p-6 md:p-10 relative z-10">
+        {phase === 'intro' && renderIntro()}
+        {phase === 'enter_name' && renderEnterName()}
+        {phase === 'round1' && renderRound1()}
+        {phase === 'round1_result' && renderRound1Result()}
+        {phase === 'round2' && renderRound2()}
+        {phase === 'round2_result' && renderRound2Result()}
+        {phase === 'round3' && renderRound3()}
+        {phase === 'round3_result' && renderRound3Result()}
+        {phase === 'gameover' && renderGameOver()}
+        {phase === 'leaderboard' && renderLeaderboard()}
       </div>
 
+      {/* Custom fonts */}
       <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-          50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        .font-serif {
+          font-family: 'Crimson Text', 'Playfair Display', Georgia, serif;
         }
+        
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
+          from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .animate-float { animation: float 8s ease-in-out infinite; }
-        .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
+        .animate-fadeIn { animation: fadeIn 0.4s ease-out; }
       `}</style>
     </div>
   );
