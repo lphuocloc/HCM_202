@@ -56,3 +56,43 @@ export interface Slide {
   video?: string;
   isVideoSlide?: boolean;
 }
+
+// GAME INTERFACES
+export interface GameScenario {
+  id: string;
+  title: string;
+  description: string;
+  scenario: string;
+  choices: {
+    text: string;
+    isCorrect: boolean;
+    explanation: string;
+  }[];
+  difficulty: "easy" | "medium" | "hard";
+  points: number;
+  topic: string;
+}
+
+export interface MatchingItem {
+  id: string;
+  term: string;
+  definition: string;
+}
+
+export interface DebateTopic {
+  id: string;
+  topic: string;
+  question: string;
+  pros: string[];
+  cons: string[];
+  hoChiMinhPosition: string;
+  difficulty: "easy" | "medium" | "hard";
+}
+
+export interface Round1QuizData {
+  roundName: string;
+  totalQuestions: number;
+  timeLimit: number;
+  questions: QuizQuestion[];
+  generatedAt: string;
+}
