@@ -859,7 +859,7 @@ export const SLIDES_DATA: Slide[] = [
       "• Đảm bảo gắn với thông điệp Hiện đại – dân chủ – minh bạch"
     ],
     bgColor: "from-gray-800 to-gray-950",
-    video: "/src/video/Quan Liêu & Tin Giả.mp4",
+    video: "/video.mp4",
     isVideoSlide: true
   },
   // SLIDE 8 – KẾT LUẬN
