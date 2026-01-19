@@ -721,6 +721,16 @@ export const CHAPTER_IV_DATA: ChapterData = {
 import type { Slide } from './types';
 
 export const SLIDES_DATA: Slide[] = [
+  // SLIDE 0 – VIDEO GIỚI THIỆU
+  {
+    id: 0,
+    icon: "",
+    title: "Video minh họa",
+    content: [],
+    bgColor: "from-gray-800 to-gray-950",
+    video: "/video.mp4",
+    isVideoSlide: true
+  },
   // SLIDE 1 – CÂU HỎI ĐẶT RA
   {
     id: 1,

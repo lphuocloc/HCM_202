@@ -107,13 +107,17 @@ const SlidePage: React.FC<SlidePageProps> = ({ onNavigate }) => {
       {/* Book Content Area */}
       <div className="flex-1 flex items-center justify-center px-4 py-8 md:py-12">
         {/* Video Slide */}
-        {slide.isVideoSlide ? (
+        {slide.isVideoSlide && slide.video ? (
           <div className="w-full max-w-5xl">
             <div className="relative bg-black rounded-lg overflow-hidden shadow-2xl">
               <video
                 controls
+                autoPlay={false}
+                preload="metadata"
                 className="w-full"
                 controlsList="nodownload"
+                onError={(e) => console.error('Video error:', e, 'Source:', slide.video)}
+                onLoadStart={() => console.log('Loading video:', slide.video)}
               >
                 <source src={slide.video} type="video/mp4" />
                 Trình duyệt của bạn không hỗ trợ video.
