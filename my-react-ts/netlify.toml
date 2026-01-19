@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redirect tất cả requests về index.html để React Router xử lý
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+
