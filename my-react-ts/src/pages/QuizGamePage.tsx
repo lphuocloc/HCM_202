@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { saveScore, getLeaderboard } from '../firebase';
 import type { LeaderboardEntry } from '../firebase';
+import { getRandomQuestions15 } from '../constants';
 import { 
   Home, 
   BookOpen, 
@@ -53,24 +54,13 @@ const HCM_QUOTES = [
   '"Nói đi đôi với làm"',
 ];
 
-// Game Data
-const FLASH_QUESTIONS: FlashQuestion[] = [
-  { id: 'f1', question: 'Đảng Cộng sản Việt Nam được thành lập năm nào?', options: ['1925', '1930', '1945', '1954'], correctAnswer: 1 },
-  { id: 'f2', question: 'Hồ Chí Minh rời Tổ quốc từ bến nào?', options: ['Bến Bạch Đằng', 'Bến Nhà Rồng', 'Bến Ninh Kiều', 'Bến Thành'], correctAnswer: 1 },
-  { id: 'f3', question: '"Đảng ta là đạo đức, là văn minh" - ai nói?', options: ['Võ Nguyên Giáp', 'Hồ Chí Minh', 'Phạm Văn Đồng', 'Lê Duẩn'], correctAnswer: 1 },
-  { id: 'f4', question: 'Tuyên ngôn Độc lập được đọc ngày nào?', options: ['19/8/1945', '2/9/1945', '22/12/1944', '7/5/1954'], correctAnswer: 1 },
-  { id: 'f5', question: 'Tác phẩm "Đường Kách Mệnh" xuất bản năm?', options: ['1925', '1927', '1930', '1941'], correctAnswer: 1 },
-  { id: 'f6', question: 'Phẩm chất đạo đức: Cần, Kiệm, Liêm, Chính và...?', options: ['Trung thực', 'Chí công vô tư', 'Khiêm tốn', 'Dũng cảm'], correctAnswer: 1 },
-  { id: 'f7', question: 'Cách mạng Tháng Tám thành công năm?', options: ['1944', '1945', '1946', '1954'], correctAnswer: 1 },
-  { id: 'f8', question: 'Mặt trận Việt Minh được thành lập năm?', options: ['1930', '1941', '1945', '1954'], correctAnswer: 1 },
-  { id: 'f9', question: 'Bác Hồ đọc Luận cương Lênin năm nào?', options: ['1917', '1919', '1920', '1925'], correctAnswer: 2 },
-  { id: 'f10', question: 'Chiến thắng Điện Biên Phủ năm?', options: ['1953', '1954', '1955', '1956'], correctAnswer: 1 },
-  { id: 'f11', question: 'Bác Hồ qua đời ngày nào?', options: ['2/9/1969', '3/9/1969', '19/5/1969', '19/8/1969'], correctAnswer: 0 },
-  { id: 'f12', question: '"Không có gì quý hơn..." - tiếp theo là gì?', options: ['Tổ quốc', 'Độc lập, tự do', 'Nhân dân', 'Hòa bình'], correctAnswer: 1 },
-  { id: 'f13', question: 'Nguyễn Ái Quốc là bí danh của ai?', options: ['Võ Nguyên Giáp', 'Phạm Văn Đồng', 'Hồ Chí Minh', 'Trần Phú'], correctAnswer: 2 },
-  { id: 'f14', question: 'Hội Việt Nam Cách mạng Thanh niên thành lập năm?', options: ['1920', '1925', '1927', '1930'], correctAnswer: 1 },
-  { id: 'f15', question: 'Bác Hồ sinh ngày nào?', options: ['19/5/1890', '19/8/1890', '2/9/1890', '22/12/1890'], correctAnswer: 0 },
-];
+// Game Data - Load 15 random questions from constants
+const FLASH_QUESTIONS: FlashQuestion[] = getRandomQuestions15().map(q => ({
+  id: q.id,
+  question: q.question,
+  options: q.options,
+  correctAnswer: q.correctAnswer,
+}));
 
 const CASE_QUESTIONS: CaseQuestion[] = [
   {
