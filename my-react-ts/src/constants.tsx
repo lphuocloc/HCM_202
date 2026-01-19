@@ -853,25 +853,6 @@ export const SLIDES_DATA: Slide[] = [
     bgColor: "from-yellow-600 to-orange-800",
     image: "https://cdn-i2.congthuong.vn/stores/news_dataimages/2023/092023/04/10/anh-1-1-52520230904103526.0641900.jpg"
   },
-  // SLIDE 7 – VIDEO MINH HỌA
-  {
-    id: 7,
-    icon: "",
-    title: "Video minh họa",
-    content: [
-      "• Đặt ở SLIDE này hoặc SLIDE 4",
-      "",
-      "• Gợi ý nội dung:",
-      "• Clip tiểu phẩm cán bộ quan liêu gây phiền hà",
-      "• Video cảnh báo tin giả – cách kiểm chứng nguồn",
-      "• Phóng sự ngắn về thanh niên đồng hành cùng Đảng, chính quyền",
-      "",
-      "• Đảm bảo gắn với thông điệp Hiện đại – dân chủ – minh bạch"
-    ],
-    bgColor: "from-gray-800 to-gray-950",
-    video: "/video.mp4",
-    isVideoSlide: true
-  },
   // SLIDE 8 – KẾT LUẬN
   {
     id: 8,
