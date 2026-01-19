@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TIMELINE_DATA } from '../constants';
 
 interface TimelinePageProps {
-  onNavigate: (mode: 'study' | 'timeline' | 'game') => void;
+  onNavigate: (mode: 'study' | 'timeline' | 'game' | 'slide') => void;
 }
 
 // Ship SVG Component - Clean sailboat design
 const ShipIcon = ({ className = "" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Sail */}
-    <path d="M24 8 L24 32 L38 32 C36 24 30 14 24 8Z" fill="#FFFFFF" stroke="#C4A77D" strokeWidth="1.5"/>
+    <path d="M24 8 L24 32 L38 32 C36 24 30 14 24 8Z" fill="#FFFFFF" stroke="#C4A77D" strokeWidth="1.5" />
     {/* Mast */}
-    <line x1="24" y1="6" x2="24" y2="34" stroke="#5D4037" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="24" y1="6" x2="24" y2="34" stroke="#5D4037" strokeWidth="2.5" strokeLinecap="round" />
     {/* Flag */}
-    <path d="M24 6 L24 10 L18 8 Z" fill="#E53935"/>
+    <path d="M24 6 L24 10 L18 8 Z" fill="#E53935" />
     {/* Hull */}
-    <path d="M10 34 L14 42 L34 42 L38 34 Z" fill="#6D4C41" stroke="#4E342E" strokeWidth="1.5" strokeLinejoin="round"/>
+    <path d="M10 34 L14 42 L34 42 L38 34 Z" fill="#6D4C41" stroke="#4E342E" strokeWidth="1.5" strokeLinejoin="round" />
     {/* Hull stripe */}
-    <line x1="13" y1="38" x2="35" y2="38" stroke="#8D6E63" strokeWidth="1.5"/>
+    <line x1="13" y1="38" x2="35" y2="38" stroke="#8D6E63" strokeWidth="1.5" />
     {/* Water reflection */}
-    <ellipse cx="24" cy="44" rx="16" ry="2" fill="#4FC3F7" opacity="0.3"/>
+    <ellipse cx="24" cy="44" rx="16" ry="2" fill="#4FC3F7" opacity="0.3" />
   </svg>
 );
 
@@ -77,7 +77,7 @@ const ArrowLeftIcon = () => (
 const periodIcons: { [key: number]: React.ReactNode } = {
   0: (
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9zM5.6 10.25c0 1.38 1.12 2.5 2.5 2.5.53 0 1.01-.16 1.42-.44l-.02.19c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5l-.02-.19c.4.28.89.44 1.42.44 1.38 0 2.5-1.12 2.5-2.5 0-1-.59-1.85-1.43-2.25.84-.4 1.43-1.25 1.43-2.25 0-1.38-1.12-2.5-2.5-2.5-.53 0-1.01.16-1.42.44l.02-.19C14.5 3.62 13.38 2.5 12 2.5S9.5 3.62 9.5 5l.02.19c-.4-.28-.89-.44-1.42-.44-1.38 0-2.5 1.12-2.5 2.5 0 1 .59 1.85 1.43 2.25-.84.4-1.43 1.25-1.43 2.25zM12 5.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM3 13c0 4.97 4.03 9 9 9 0-4.97-4.03-9-9-9z"/>
+      <path d="M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9zM5.6 10.25c0 1.38 1.12 2.5 2.5 2.5.53 0 1.01-.16 1.42-.44l-.02.19c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5l-.02-.19c.4.28.89.44 1.42.44 1.38 0 2.5-1.12 2.5-2.5 0-1-.59-1.85-1.43-2.25.84-.4 1.43-1.25 1.43-2.25 0-1.38-1.12-2.5-2.5-2.5-.53 0-1.01.16-1.42.44l.02-.19C14.5 3.62 13.38 2.5 12 2.5S9.5 3.62 9.5 5l.02.19c-.4-.28-.89-.44-1.42-.44-1.38 0-2.5 1.12-2.5 2.5 0 1 .59 1.85 1.43 2.25-.84.4-1.43 1.25-1.43 2.25zM12 5.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM3 13c0 4.97 4.03 9 9 9 0-4.97-4.03-9-9-9z" />
     </svg>
   ),
   1: (
@@ -87,7 +87,7 @@ const periodIcons: { [key: number]: React.ReactNode } = {
   ),
   2: (
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 23c-3.87 0-7-3.13-7-7 0-2.38 1.19-4.47 3-5.74V9c0-2.76 2.24-5 5-5s5 2.24 5 5v1.26c1.81 1.27 3 3.36 3 5.74 0 3.87-3.13 7-7 7z"/>
+      <path d="M12 23c-3.87 0-7-3.13-7-7 0-2.38 1.19-4.47 3-5.74V9c0-2.76 2.24-5 5-5s5 2.24 5 5v1.26c1.81 1.27 3 3.36 3 5.74 0 3.87-3.13 7-7 7z" />
     </svg>
   ),
   3: (
@@ -120,24 +120,6 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
 
   const selectedPeriodData = TIMELINE_DATA.find(p => p.id === selectedPeriod);
 
-  // Move ship when period is selected
-  useEffect(() => {
-    if (selectedPeriod) {
-      const periodIndex = TIMELINE_DATA.findIndex(p => p.id === selectedPeriod);
-      if (periodIndex !== -1) {
-        setIsShipMoving(true);
-        const targetPos = islandPositions[periodIndex];
-        // Position ship exactly at the island (slightly below for visual effect)
-        setShipPosition({ 
-          x: targetPos.x, 
-          y: targetPos.y + 18 // Slightly below the island
-        });
-        // Reset moving state after animation
-        setTimeout(() => setIsShipMoving(false), 1500);
-      }
-    }
-  }, [selectedPeriod]);
-
   const handleIslandClick = (periodId: string) => {
     if (selectedPeriod === periodId) {
       setSelectedPeriod(null);
@@ -149,13 +131,26 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
     } else {
       setSelectedPeriod(periodId);
       setSelectedEvent(null);
+      // Move ship to selected island
+      const periodIndex = TIMELINE_DATA.findIndex(p => p.id === periodId);
+      if (periodIndex !== -1) {
+        setIsShipMoving(true);
+        const targetPos = islandPositions[periodIndex];
+        // Position ship exactly at the island (slightly below for visual effect)
+        setShipPosition({
+          x: targetPos.x,
+          y: targetPos.y + 18 // Slightly below the island
+        });
+        // Reset moving state after animation
+        setTimeout(() => setIsShipMoving(false), 1500);
+      }
     }
   };
 
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
       {/* Background */}
-      <div 
+      <div
         className="fixed inset-0"
         style={{
           background: 'linear-gradient(180deg, #d4e4ed 0%, #a8c5d8 30%, #6a9ab8 60%, #4a7a98 80%, #3a6a88 100%)',
@@ -164,7 +159,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
 
       {/* Content Container */}
       <div className="relative z-10 min-h-screen flex flex-col">
-        
+
         {/* Top Navigation */}
         <nav className="sticky top-0 z-50 bg-[#f5f0e8]/95 backdrop-blur-sm border-b border-[#d4c5a1] shadow-sm">
           <div className="flex items-center justify-between px-4 py-2">
@@ -196,7 +191,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                 <span className="hidden sm:inline">Học</span>
               </button>
               <button
-                onClick={() => onNavigate('quiz')}
+                onClick={() => onNavigate('game')}
                 className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#e5dcc3] text-[#6d4c41] hover:bg-[#d4c5a1] transition-colors text-xs"
               >
                 <ClipboardIcon />
@@ -204,7 +199,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
               </button>
             </div>
           </div>
-          
+
           {/* Subtitle */}
           <div className="text-center pb-1.5 text-[#8b7355] text-[10px] italic">
             Cuộc hành trình vĩ đại từ Kim Liên đến khắp năm châu (1890 - 1969)
@@ -215,14 +210,14 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
         <div className="flex-1 px-2 py-3">
           {/* Horizontal Scrollable Map */}
           <div className="overflow-x-auto pb-2">
-            <div 
+            <div
               className="relative min-w-[1200px] h-[340px] rounded-xl overflow-hidden border-2 border-[#8b7355]/30"
               style={{
                 background: 'linear-gradient(180deg, #7ab8d4 0%, #5a98b4 30%, #4a8aa8 60%, #3a7a98 100%)',
               }}
             >
               {/* Ocean waves overlay */}
-              <div 
+              <div
                 className="absolute inset-0 opacity-15"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 12.5 5, 25 10 T 50 10 T 75 10 T 100 10' stroke='%23ffffff' fill='none' stroke-width='1'/%3E%3C/svg%3E")`,
@@ -254,7 +249,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                   </linearGradient>
                 </defs>
                 {/* Main dashed path */}
-                <path 
+                <path
                   d="M -150 420 Q -30 300, 72 190 C 130 150, 200 180, 288 144 S 420 180, 552 209 S 700 160, 840 133 S 980 150, 1104 155 L 1800 155"
                   stroke="url(#pathGradient)"
                   strokeWidth="6"
@@ -266,25 +261,25 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                 {/* Arrow head at end */}
                 <g transform="translate(1800, 152)">
                   {/* Arrow shadow */}
-                  <polygon 
-                    points="0,-15 0,15 35,0" 
+                  <polygon
+                    points="0,-15 0,15 35,0"
                     fill="rgba(0,0,0,0.25)"
                     transform="translate(2, 2)"
                   />
                   {/* Arrow body */}
-                  <polygon 
-                    points="0,-15 0,15 35,0" 
+                  <polygon
+                    points="0,-15 0,15 35,0"
                     fill="#8b5cf6"
                   />
                   {/* Arrow highlight */}
-                  <polygon 
-                    points="0,-15 0,0 28,-5" 
+                  <polygon
+                    points="0,-15 0,0 28,-5"
                     fill="#a78bfa"
                     opacity="0.5"
                   />
                   {/* Arrow outline */}
-                  <polygon 
-                    points="0,-15 0,15 35,0" 
+                  <polygon
+                    points="0,-15 0,15 35,0"
                     fill="none"
                     stroke="#6d28d9"
                     strokeWidth="1.5"
@@ -293,9 +288,9 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
               </svg>
 
               {/* Animated Ship */}
-              <div 
+              <div
                 className={`absolute z-20 transition-all ${isShipMoving ? 'duration-1500' : 'duration-300'} ease-in-out`}
-                style={{ 
+                style={{
                   left: `${shipPosition.x}%`,
                   top: `${shipPosition.y}%`,
                   transform: 'translate(-50%, -50%)',
@@ -319,7 +314,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                   { x: 70, y: 35, size: 80 },
                   { x: 92, y: 42, size: 85 },
                 ];
-                
+
                 const pos = positions[index];
                 const isSelected = selectedPeriod === period.id;
 
@@ -327,20 +322,19 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                   <button
                     key={period.id}
                     onClick={() => handleIslandClick(period.id)}
-                    className={`absolute transition-all duration-300 group ${
-                      isSelected ? 'z-30 scale-110' : 'z-10 hover:scale-105 hover:z-20'
-                    }`}
-                    style={{ 
-                      left: `${pos.x}%`, 
+                    className={`absolute transition-all duration-300 group ${isSelected ? 'z-30 scale-110' : 'z-10 hover:scale-105 hover:z-20'
+                      }`}
+                    style={{
+                      left: `${pos.x}%`,
                       top: `${pos.y}%`,
                       transform: 'translate(-50%, -50%)',
                     }}
                   >
                     {/* Island Glow */}
                     {isSelected && (
-                      <div 
+                      <div
                         className="absolute inset-0 rounded-full blur-lg opacity-60 animate-pulse"
-                        style={{ 
+                        style={{
                           backgroundColor: period.color,
                           width: pos.size * 1.4,
                           height: pos.size,
@@ -352,28 +346,28 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                     )}
 
                     {/* Island Shape */}
-                    <div 
+                    <div
                       className="relative"
                       style={{ width: pos.size, height: pos.size * 0.55 }}
                     >
-                      <div 
+                      <div
                         className="absolute inset-0 rounded-[45%_55%_50%_50%/55%_50%_50%_45%] shadow-xl"
                         style={{
                           background: `radial-gradient(ellipse at 40% 30%, ${period.color}cc 0%, ${period.color} 70%)`,
-                          boxShadow: isSelected 
-                            ? `0 0 30px ${period.color}80, 0 8px 20px rgba(0,0,0,0.3)` 
+                          boxShadow: isSelected
+                            ? `0 0 30px ${period.color}80, 0 8px 20px rgba(0,0,0,0.3)`
                             : '0 6px 15px rgba(0,0,0,0.25)',
                         }}
                       />
-                      
+
                       {/* Beach */}
-                      <div 
+                      <div
                         className="absolute inset-x-2 bottom-0 h-1.5 rounded-b-full opacity-40"
                         style={{ background: 'linear-gradient(to top, #f5deb3, transparent)' }}
                       />
 
                       {/* Center Icon */}
-                      <div 
+                      <div
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white/40"
                         style={{ backgroundColor: period.color }}
                       >
@@ -394,22 +388,22 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
               {/* Decorative small islands */}
               <div className="absolute left-[15%] top-[75%] opacity-25">
                 <svg className="w-5 h-5 text-[#5a7a5a]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L8 8h8l-4-6zM8 8L4 14h8l-4-6z"/>
+                  <path d="M12 2L8 8h8l-4-6zM8 8L4 14h8l-4-6z" />
                 </svg>
               </div>
               <div className="absolute left-[35%] top-[80%] opacity-20">
                 <svg className="w-4 h-4 text-[#7a7a7a]" fill="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="8"/>
+                  <circle cx="12" cy="12" r="8" />
                 </svg>
               </div>
               <div className="absolute left-[60%] top-[78%] opacity-25">
                 <svg className="w-5 h-5 text-[#5a7a5a]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L8 8h8l-4-6z"/>
+                  <path d="M12 2L8 8h8l-4-6z" />
                 </svg>
               </div>
               <div className="absolute left-[80%] top-[75%] opacity-20">
                 <svg className="w-4 h-4 text-[#6a8a6a]" fill="currentColor" viewBox="0 0 24 24">
-                  <ellipse cx="12" cy="12" rx="10" ry="6"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="6" />
                 </svg>
               </div>
 
@@ -447,13 +441,13 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
           {/* Selected Period Details */}
           {selectedPeriodData && (
             <div className="mt-3 animate-slideUp">
-              <div 
+              <div
                 className="rounded-xl p-3 border bg-white/95 backdrop-blur-sm shadow-lg"
                 style={{ borderColor: selectedPeriodData.color }}
               >
                 {/* Period Header */}
                 <div className="flex items-center gap-3 mb-4 pb-3 border-b" style={{ borderColor: `${selectedPeriodData.color}30` }}>
-                  <div 
+                  <div
                     className="w-10 h-10 rounded-full flex items-center justify-center text-white shadow text-lg"
                     style={{ backgroundColor: selectedPeriodData.color }}
                   >
@@ -467,7 +461,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                       {selectedPeriodData.theme}
                     </h3>
                   </div>
-                  <button 
+                  <button
                     onClick={() => handleIslandClick(selectedPeriodData.id)}
                     className="text-[#8b7355] hover:text-[#4a3728] p-1 rounded-lg hover:bg-[#f0e6cf] transition-colors"
                   >
@@ -479,25 +473,24 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   {selectedPeriodData.events.map((event, eventIndex) => {
                     const isEventSelected = selectedEvent === `${selectedPeriodData.id}-${eventIndex}`;
-                    
+
                     return (
                       <button
                         key={eventIndex}
                         onClick={() => setSelectedEvent(isEventSelected ? null : `${selectedPeriodData.id}-${eventIndex}`)}
-                        className={`text-left p-2 rounded-lg border transition-all duration-200 ${
-                          isEventSelected ? 'bg-[#f4ecd8] shadow' : 'bg-[#fdfaf3] hover:bg-[#f4ecd8]'
-                        }`}
+                        className={`text-left p-2 rounded-lg border transition-all duration-200 ${isEventSelected ? 'bg-[#f4ecd8] shadow' : 'bg-[#fdfaf3] hover:bg-[#f4ecd8]'
+                          }`}
                         style={{ borderColor: isEventSelected ? selectedPeriodData.color : '#e5dcc3' }}
                       >
                         <div className="flex items-start gap-1.5">
                           {/* Thumbnail or icon */}
                           {event.image ? (
-                            <div 
+                            <div
                               className="w-10 h-10 rounded-lg flex-shrink-0 shadow-sm overflow-hidden border"
                               style={{ borderColor: selectedPeriodData.color }}
                             >
-                              <img 
-                                src={event.image} 
+                              <img
+                                src={event.image}
                                 alt={event.title}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
@@ -506,7 +499,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                               />
                             </div>
                           ) : (
-                            <div 
+                            <div
                               className="w-10 h-10 rounded-lg flex items-center justify-center text-white flex-shrink-0 shadow-sm text-lg"
                               style={{ backgroundColor: selectedPeriodData.color }}
                             >
@@ -515,7 +508,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                           )}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1 mb-1">
-                              <span 
+                              <span
                                 className="text-[10px] font-bold px-1.5 py-0.5 rounded"
                                 style={{ backgroundColor: `${selectedPeriodData.color}20`, color: selectedPeriodData.color }}
                               >
@@ -524,14 +517,14 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                             </div>
                             <h4 className="font-bold text-[#4a3728] text-xs">{event.title}</h4>
                             <p className="text-[#6d4c41] text-[11px] mt-1 line-clamp-2">{event.description}</p>
-                            
+
                             {isEventSelected && (
                               <div className="mt-1.5 pt-1.5 border-t border-[#e5dcc3] animate-slideUp">
                                 {/* Historical Image */}
                                 {event.image && (
                                   <div className="mb-2 rounded-lg overflow-hidden border border-[#d4c5a1] shadow-sm">
-                                    <img 
-                                      src={event.image} 
+                                    <img
+                                      src={event.image}
                                       alt={event.title}
                                       className="w-full h-24 object-cover"
                                       onError={(e) => {
@@ -549,7 +542,7 @@ const TimelinePage: React.FC<TimelinePageProps> = ({ onNavigate }) => {
                                   ))}
                                 </ul>
                                 {event.highlight && (
-                                  <div 
+                                  <div
                                     className="mt-2 p-1.5 rounded text-[11px] italic"
                                     style={{ backgroundColor: `${selectedPeriodData.color}15`, color: '#4a3728' }}
                                   >
